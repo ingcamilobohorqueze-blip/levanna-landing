@@ -429,3 +429,43 @@ p {
   from { opacity: 0; transform: translateY(20px) scale(0.98); }
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
+
+/* Responsiveness Fixes */
+.about-content {
+  padding: 4rem 5rem;
+}
+
+.header-nav {
+  display: flex; 
+  gap: 2.5rem; 
+  align-items: center;
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    padding: 2.5rem 1.5rem !important; /* Fix horizontal clipping on about panel */
+  }
+
+  .header-nav {
+    display: none !important; /* Hide long desktop nav links on small screens to prevent horizontal overflow */
+  }
+
+  /* Make header elements wrap properly instead of breaking the x-axis */
+  header .container {
+    gap: 1rem;
+  }
+
+  /* Reduce client CTA button size on mobile */
+  header .btn-primary {
+    padding: 0.6rem 1rem !important;
+    font-size: 0.85rem !important;
+  }
+
+  /* Slightly shrink whatsapp button to look better on phones and stay inside bounds */
+  .whatsapp-flotante {
+    right: 20px;
+    bottom: 20px;
+    width: 55px;
+    height: 55px;
+  }
+}

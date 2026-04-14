@@ -6,7 +6,7 @@ export default function About() {
         {/* Top Decorative Banner */}
         <div style={{ height: '8px', background: 'var(--accent-gradient)', width: '100%' }}></div>
         
-        <div style={{ padding: '4rem 5rem' }} className="grid-2">
+        <div className="grid-2 about-content">
           <div>
             <div className="badge" style={{ marginBottom: '1.5rem', border: '1px solid var(--panel-border)', background: 'var(--bg-secondary)', color: 'var(--text-primary)' }}>Quiénes Somos</div>
             <h2 style={{ fontSize: '2.5rem', marginBottom: '1.5rem' }}>Tecnología que impulsa <br/><span className="text-gradient">la industria y la construcción.</span></h2>

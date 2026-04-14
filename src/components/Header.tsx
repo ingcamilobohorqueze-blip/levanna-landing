@@ -37,7 +37,7 @@ export default function Header() {
           <img src="/logo-light.png" alt="Levanna DC" className="logo-light" style={{ height: '68px', width: 'auto', objectFit: 'contain' }} />
         </Link>
         
-        <nav style={{ display: 'flex', gap: '2.5rem', alignItems: 'center' }}>
+        <nav className="header-nav">
           {location.pathname !== '/' && (
             <Link to="/" onClick={handleHomeClick} style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }}>
               Inicio
