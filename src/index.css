@@ -213,6 +213,21 @@ p {
   padding: 0 var(--spacing);
 }
 
+/* Nav Link class para forzar contraste en modo claro */
+.nav-link {
+  color: var(--accent-blue); /* #1A2233 */
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+@media (prefers-color-scheme: dark) {
+  .nav-link {
+    color: var(--text-secondary);
+  }
+}
+
 .section {
   padding: 6rem 0;
 }
@@ -442,6 +457,17 @@ p {
 }
 
 @media (max-width: 768px) {
+  /* Reducir padding horizontal en móvil */
+  .container {
+    padding: 0 16px;
+  }
+  .card-panel {
+    padding: 1.5rem;
+  }
+  .section {
+    padding: 4rem 0;
+  }
+
   .about-content {
     padding: 2.5rem 1.5rem !important; /* Fix horizontal clipping on about panel */
   }

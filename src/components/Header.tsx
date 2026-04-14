@@ -39,13 +39,13 @@ export default function Header() {
         
         <nav className="header-nav">
           {location.pathname !== '/' && (
-            <Link to="/" onClick={handleHomeClick} style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s' }}>
+            <Link to="/" onClick={handleHomeClick} className="nav-link">
               Inicio
             </Link>
           )}
-          <a href="#soluciones-ia" onClick={(e) => handleNavClick(e, 'soluciones-ia')} style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s', cursor: 'pointer' }}>Soluciones IA</a>
-          <a href="#consultoria" onClick={(e) => handleNavClick(e, 'consultoria')} style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s', cursor: 'pointer' }}>Consultoría</a>
-          <a href="#contacto" onClick={(e) => handleNavClick(e, 'contacto')} style={{ color: 'var(--text-secondary)', textDecoration: 'none', fontWeight: 500, transition: 'color 0.2s', cursor: 'pointer' }}>Contáctanos</a>
+          <a href="#soluciones-ia" onClick={(e) => handleNavClick(e, 'soluciones-ia')} className="nav-link">Soluciones IA</a>
+          <a href="#consultoria" onClick={(e) => handleNavClick(e, 'consultoria')} className="nav-link">Consultoría</a>
+          <a href="#contacto" onClick={(e) => handleNavClick(e, 'contacto')} className="nav-link">Contáctanos</a>
         </nav>
         
         <div>

@@ -13,12 +13,12 @@ export default function Hero() {
       <div className="animate-slide-up" style={{ maxWidth: '1000px', margin: '0 auto', textAlign: 'center' }}>
         
         <h1 style={{ lineHeight: '1.2' }}>
-          Inteligencia Artificial que <br /> 
-          <span className="text-gradient">construye rentabilidad.</span>
+          El <span className="text-gradient">ecosistema</span> digital que <br />
+          transforma tu operación.
         </h1>
         
         <p style={{ margin: '2rem auto 3.5rem', fontSize: '1.35rem', maxWidth: '700px' }}>
-          Transformamos la operación en la industria y la construcción con soluciones de IA de grado empresarial. Reducimos costos operativos y mitigamos riesgos mediante la automatización de procesos críticos.
+          Centraliza el control de tus obras y plantas industriales en una sola plataforma. Desde el acceso del personal hasta la ejecución presupuestal, automatizamos tus procesos con tecnología e IA para proteger tu rentabilidad.
         </p>
         
         <div style={{ display: 'flex', gap: '1.5rem', justifyContent: 'center', flexWrap: 'wrap' }}>
