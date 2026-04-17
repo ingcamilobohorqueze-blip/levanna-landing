@@ -43,7 +43,7 @@ export default function PrivacyPolicy() {
 
         <h3 style={{ color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>1. Identificación del Responsable del Tratamiento</h3>
         <ul style={{ marginBottom: '2rem', paddingLeft: '1.5rem', listStyleType: 'disc' }}>
-          <li style={{ marginBottom: '0.5rem' }}><strong>Razón Social:</strong> Levanna Diseño y Construcción</li>
+          <li style={{ marginBottom: '0.5rem' }}><strong>Razón Social:</strong> Levanna Digital Control</li>
           <li style={{ marginBottom: '0.5rem' }}><strong>Sitio Web:</strong> <a href="https://www.levannadc.com" style={{ color: 'var(--text-primary)', textDecoration: 'underline', fontWeight: 600 }}>www.levannadc.com</a></li>
           <li style={{ marginBottom: '0.5rem' }}><strong>Correo Electrónico:</strong> info@levannadc.com</li>
           <li style={{ marginBottom: '0.5rem' }}><strong>Teléfono:</strong> +57 3103311543</li>
@@ -52,7 +52,7 @@ export default function PrivacyPolicy() {
 
         <h3 style={{ color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>2. Marco Legal y Propósito</h3>
         <p style={{ marginBottom: '2rem' }}>
-          La presente política se rige por los parámetros establecidos en la Ley Estatutaria 1581 de 2012 y el Decreto 1377 de 2013 (Ley de Protección de Datos Personales en Colombia), así como las normativas concordantes aplicables en la región. Levanna Diseño y Construcción garantiza la protección de los derechos al Habeas Data, la intimidad y el buen nombre de las personas, estableciendo los términos bajo los cuales se realiza la recolección, almacenamiento, uso, circulación y supresión de los datos personales.
+          La presente política se rige por los parámetros establecidos en la Ley Estatutaria 1581 de 2012 y el Decreto 1377 de 2013 (Ley de Protección de Datos Personales en Colombia), así como las normativas concordantes aplicables en la región. Levanna Digital Control garantiza la protección de los derechos al Habeas Data, la intimidad y el buen nombre de las personas, estableciendo los términos bajo los cuales se realiza la recolección, almacenamiento, uso, circulación y supresión de los datos personales.
         </p>
 
         <h3 style={{ color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>3. Datos Personales Recolectados</h3>
@@ -71,7 +71,7 @@ export default function PrivacyPolicy() {
         <ul style={{ marginBottom: '1rem', paddingLeft: '1.5rem', listStyleType: 'disc' }}>
           <li style={{ marginBottom: '0.5rem' }}>Procesar y responder a solicitudes de información, cotizaciones y consultas sobre nuestros servicios.</li>
           <li style={{ marginBottom: '0.5rem' }}>Mantener un registro de clientes y contactos comerciales para la prestación eficiente del servicio.</li>
-          <li style={{ marginBottom: '0.5rem' }}>Enviar comunicaciones comerciales, boletines informativos, actualizaciones de servicios o promociones relevantes de Levanna Diseño y Construcción, siempre que el Titular haya otorgado su autorización.</li>
+          <li style={{ marginBottom: '0.5rem' }}>Enviar comunicaciones comerciales, boletines informativos, actualizaciones de servicios o promociones relevantes de Levanna Digital Control, siempre que el Titular haya otorgado su autorización.</li>
           <li style={{ marginBottom: '0.5rem' }}>Dar cumplimiento a obligaciones legales, contractuales o tributarias.</li>
         </ul>
         <p style={{ marginBottom: '2rem', padding: '1rem', background: 'var(--bg-primary)', borderRadius: '8px', borderLeft: '4px solid var(--accent-purple)' }}>
@@ -81,7 +81,7 @@ export default function PrivacyPolicy() {
         <h3 style={{ color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>5. Derechos del Titular de los Datos</h3>
         <p style={{ marginBottom: '1rem' }}>De conformidad con la legislación aplicable, los usuarios (Titulares) tienen los siguientes derechos:</p>
         <ul style={{ marginBottom: '2rem', paddingLeft: '1.5rem', listStyleType: 'disc' }}>
-          <li style={{ marginBottom: '0.5rem' }}>Conocer, actualizar y rectificar sus datos personales frente a Levanna Diseño y Construcción.</li>
+          <li style={{ marginBottom: '0.5rem' }}>Conocer, actualizar y rectificar sus datos personales frente a Levanna Digital Control.</li>
           <li style={{ marginBottom: '0.5rem' }}>Solicitar prueba de la autorización otorgada para el tratamiento de sus datos.</li>
           <li style={{ marginBottom: '0.5rem' }}>Ser informado respecto al uso que se le ha dado a sus datos personales.</li>
           <li style={{ marginBottom: '0.5rem' }}>Revocar la autorización y/o solicitar la supresión del dato cuando en el tratamiento no se respeten los principios, derechos y garantías constitucionales y legales.</li>

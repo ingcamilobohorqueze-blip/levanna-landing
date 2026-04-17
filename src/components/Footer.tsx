@@ -30,11 +30,17 @@ export default function Footer() {
       </div>
       <div className="container grid-3" style={{ marginBottom: '4rem', gap: '4rem' }}>
         <div>
-          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
-            <img src="/logo-dark.png" alt="Levanna DC" className="logo-dark" style={{ height: '45px', objectFit: 'contain' }} />
-            <img src="/logo-light.png" alt="Levanna DC" className="logo-light" style={{ height: '45px', objectFit: 'contain' }} />
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+            <img src="/logo-dark.png" alt="Levanna DC" className="logo-dark" style={{ height: '45px', objectFit: 'contain', marginRight: '0.75rem' }} />
+            <img src="/logo-light.png" alt="Levanna DC" className="logo-light" style={{ height: '45px', objectFit: 'contain', marginRight: '0.75rem' }} />
+            <span style={{ fontSize: '1.5rem', fontWeight: 600, color: 'var(--text-primary)', letterSpacing: '-0.02em' }}>Digital Control</span>
           </div>
-          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)' }}>Aceleramos el futuro de la construcción integrando Inteligencia Artificial en tus flujos de trabajo.</p>
+          <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
+            Automatizamos procesos, potenciamos decisiones.
+          </p>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', opacity: 0.8 }}>
+            Aceleramos el futuro de la construcción integrando Inteligencia Artificial en tus flujos de trabajo.
+          </p>
         </div>
         
         <div>

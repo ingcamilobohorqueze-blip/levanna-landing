@@ -17,6 +17,10 @@ export default function Hero() {
           transforma tu operación.
         </h1>
         
+        <p style={{ marginTop: '1rem', marginBottom: '0', fontSize: '1.3rem', color: '#6B7280', fontWeight: 400, letterSpacing: '0.02em' }}>
+          Automatizamos procesos, potenciamos decisiones.
+        </p>
+        
         <p style={{ margin: '2rem auto 3.5rem', fontSize: '1.35rem', maxWidth: '700px' }}>
           Centraliza el control de tus obras y plantas industriales en una sola plataforma. Desde el acceso del personal hasta la ejecución presupuestal, automatizamos tus procesos con tecnología e IA para proteger tu rentabilidad.
         </p>

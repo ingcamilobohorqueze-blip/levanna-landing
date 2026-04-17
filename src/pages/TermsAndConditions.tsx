@@ -17,7 +17,7 @@ export default function TermsAndConditions() {
 
         <h3 style={{ color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>1. Información General y Aceptación</h3>
         <p style={{ marginBottom: '2rem' }}>
-          Los presentes Términos y Condiciones regulan el acceso y uso del sitio web www.levannadc.com, así como la contratación de los servicios ofrecidos por Levanna Diseño y Construcción (en adelante, "Levanna DC" o "La Empresa"). Al acceder, navegar o utilizar este sitio web, así como al contratar cualquiera de nuestros servicios físicos o digitales, el usuario (en adelante, "El Cliente" o "El Usuario") acepta expresamente y en su totalidad los presentes términos. Si no está de acuerdo con estos términos, le rogamos que no utilice nuestro sitio web ni nuestros servicios.
+          Los presentes Términos y Condiciones regulan el acceso y uso del sitio web www.levannadc.com, así como la contratación de los servicios ofrecidos por Levanna Digital Control (en adelante, "Levanna DC" o "La Empresa"). Al acceder, navegar o utilizar este sitio web, así como al contratar cualquiera de nuestros servicios físicos o digitales, el usuario (en adelante, "El Cliente" o "El Usuario") acepta expresamente y en su totalidad los presentes términos. Si no está de acuerdo con estos términos, le rogamos que no utilice nuestro sitio web ni nuestros servicios.
         </p>
 
         <h3 style={{ color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>2. Naturaleza de los Servicios</h3>
