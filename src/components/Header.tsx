@@ -53,19 +53,19 @@ export default function Header() {
 
           {/* Botón de acceso clonado para menú móvil (visible solo en mobile) */}
           <div style={{ width: '100%', marginTop: '1rem' }} className="mobile-menu-btn">
-            <button className="btn-primary" style={{ padding: '0.8rem 1.5rem', fontSize: '0.95rem', gap: '0.5rem', width: '100%', justifyContent: 'center' }}>
+            <a href="https://levanna-tenant-hub-hub.vercel.app/login" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: '0.8rem 1.5rem', fontSize: '0.95rem', gap: '0.5rem', width: '100%', justifyContent: 'center', display: 'flex', textDecoration: 'none' }}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
               Acceso Clientes
-            </button>
+            </a>
           </div>
         </nav>
         
         {/* Link to access control dashboard - Desktop */}
         <div className="desktop-access-btn" style={{ zIndex: 101 }}>
-          <button className="btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.95rem', gap: '0.5rem' }}>
+          <a href="https://levanna-tenant-hub-hub.vercel.app/login" target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ padding: '0.6rem 1.5rem', fontSize: '0.95rem', gap: '0.5rem', display: 'flex', textDecoration: 'none' }}>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></svg>
             Acceso Clientes
-          </button>
+          </a>
         </div>
 
         {/* Hamburger Menu Toggle */}
