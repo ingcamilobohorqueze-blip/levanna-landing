@@ -73,6 +73,3 @@ export default defineConfig([
 ```
 <!-- Trigger build for Hub login URL update -->
 
-
-
-
