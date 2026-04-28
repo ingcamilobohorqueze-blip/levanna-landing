@@ -12,7 +12,7 @@ export default function TermsAndConditions() {
 
       <div style={{ color: 'var(--text-secondary)', lineHeight: '1.8', fontSize: '1rem' }}>
         <p style={{ marginBottom: '2rem' }}>
-          <strong>Última actualización: 13 de abril de 2026</strong>
+          <strong>Última actualización: 28 de abril de 2026</strong>
         </p>
 
         <h3 style={{ color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>1. Información General y Aceptación</h3>
@@ -54,10 +54,12 @@ export default function TermsAndConditions() {
           <li style={{ marginBottom: '0.5rem' }}><strong>Del Cliente:</strong> Toda la información, bases de datos, recibos, documentos de licitación y datos operativos ingresados por el Cliente a las plataformas de Levanna DC siguen siendo de su exclusiva propiedad.</li>
         </ul>
 
-        <h3 style={{ color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>6. Limitación de Responsabilidad</h3>
+        <h3 style={{ color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>6. Uso de Inteligencia Artificial (IA) y Limitación de Responsabilidad</h3>
         <ul style={{ marginBottom: '2rem', paddingLeft: '1.5rem', listStyleType: 'disc' }}>
-          <li style={{ marginBottom: '0.5rem' }}><strong>Herramientas Analíticas y de IA:</strong> Las plataformas de análisis de datos y procesamiento de licitaciones suministradas por Levanna DC actúan como herramientas de asistencia tecnológica. La revisión final, validación financiera, técnica y legal, así como las decisiones comerciales o de participación en procesos licitatorios, recaen de manera exclusiva y absoluta en el Cliente. Levanna DC no asume responsabilidad alguna por pérdidas económicas, lucro cesante o daños derivados del uso de la información procesada por nuestros sistemas.</li>
-          <li style={{ marginBottom: '0.5rem' }}><strong>Responsabilidad General:</strong> La responsabilidad máxima de Levanna DC frente a cualquier reclamación derivada del uso del software no excederá en ningún caso el monto total pagado por el Cliente durante los últimos doce (12) meses por el servicio que dio origen a la reclamación.</li>
+          <li style={{ marginBottom: '0.5rem' }}><strong>6.1. Naturaleza de las Herramientas de IA:</strong> Levanna DC integra en su plataforma diversas herramientas basadas en Inteligencia Artificial y automatización. El Cliente reconoce y acepta que estas herramientas actúan como asistencia tecnológica y apoyo a la productividad, y no sustituyen el juicio, análisis o asesoría profesional humana.</li>
+          <li style={{ marginBottom: '0.5rem' }}><strong>6.2. Margen de Error y "Alucinaciones":</strong> El Cliente comprende que los modelos de Inteligencia Artificial pueden generar resultados inexactos, incompletos o ficticios (fenómeno conocido como "alucinaciones"). Levanna DC no garantiza la exactitud o idoneidad al 100% de la información generada, resumida o extraída por sus agentes de IA.</li>
+          <li style={{ marginBottom: '0.5rem' }}><strong>6.3. Obligación de Revisión Humana (Human-in-the-loop):</strong> Es responsabilidad exclusiva y obligatoria del Cliente revisar, verificar y validar todo contenido, cálculo, resumen, análisis de pliegos o dato extraído por la IA antes de tomar decisiones comerciales, legales, financieras o de participación en licitaciones basadas en dicha información.</li>
+          <li style={{ marginBottom: '0.5rem' }}><strong>6.4. Exención de Responsabilidad General:</strong> Levanna DC no asume responsabilidad alguna por pérdidas económicas, lucro cesante o daños derivados del uso indebido de la plataforma o de la confianza ciega en los resultados generados por la IA. La responsabilidad máxima de Levanna DC frente a cualquier reclamación derivada del uso del software no excederá en ningún caso el monto total pagado por el Cliente durante los últimos doce (12) meses por el servicio que dio origen a la reclamación.</li>
         </ul>
 
         <h3 style={{ color: 'var(--text-primary)', marginTop: '2rem', marginBottom: '1rem', fontSize: '1.3rem' }}>7. Legislación Aplicable y Resolución de Controversias</h3>
