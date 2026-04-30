@@ -1,5 +1,12 @@
+interface Product {
+  title: string;
+  desc: string;
+  image?: string;
+  icon?: string;
+}
+
 export default function Features() {
-  const products = [
+  const products: Product[] = [
     { 
       title: 'Control de Acceso Inteligente', 
       desc: 'El fin de la infraestructura costosa y las planillas de papel. Nuestra aplicación nativa transforma la gestión de personal en obra o en oficina sin requerir equipos físicos ni mantenimientos. Un sistema de acceso 100% sin contacto que te brinda información en pantalla en tiempo real. Gestiona las horas laboradas de tu equipo con precisión y recibe alertas de seguridad automáticas (como el vencimiento de planillas de seguridad social o ARL) antes de que se conviertan en un riesgo.', 
