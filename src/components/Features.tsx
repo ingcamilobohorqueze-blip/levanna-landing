@@ -2,17 +2,17 @@ export default function Features() {
   const products = [
     { 
       title: 'Control de Acceso Inteligente', 
-      desc: 'El fin de la infraestructura costosa y las planillas de papel. Nuestra aplicación nativa transforma la gestión de personal en obra o en oficina sin requerir equipos físicos ni mantenimientos. Un sistema de acceso 100% sin contacto que te brinda información en pantalla en tiempo real.', 
+      desc: 'El fin de la infraestructura costosa y las planillas de papel. Nuestra aplicación nativa transforma la gestión de personal en obra o en oficina sin requerir equipos físicos ni mantenimientos. Un sistema de acceso 100% sin contacto que te brinda información en pantalla en tiempo real. Gestiona las horas laboradas de tu equipo con precisión y recibe alertas de seguridad automáticas (como el vencimiento de planillas de seguridad social o ARL) antes de que se conviertan en un riesgo.', 
       image: '/apps/control-acceso.png' 
     },
     { 
       title: 'Caja Menor App Nativa', 
-      desc: 'Auditoría y control de gastos de campo, ahora en su propia App. Evolucionamos nuestra gestión financiera dejando atrás los reportes por WhatsApp. Con nuestra nueva aplicación nativa, tienes el control absoluto de tu flujo de caja.', 
+      desc: 'Auditoría y control de gastos de campo, ahora en su propia App. Evolucionamos nuestra gestión financiera dejando atrás los reportes por WhatsApp. Con nuestra nueva aplicación nativa, tienes el control absoluto de tu flujo de caja: verifica y modifica registros al instante, bloquea gastos no autorizados y mantén un historial inmutable. Además, tu equipo puede gestionar y solicitar reembolsos directamente desde la app. Transparencia, orden y agilidad en cada peso invertido.', 
       image: '/apps/caja-menor.png' 
     },
     { 
       title: 'Asistente de Reuniones', 
-      desc: 'Tu copiloto inteligente para comités y recorridos de obra. Olvídate de las actas manuales y los compromisos en el aire. Nuestro asistente transcribe de forma inteligente tus juntas y recorridos de campo, identificando los puntos clave.', 
+      desc: 'Tu copiloto inteligente para comités y recorridos de obra. Olvídate de las actas manuales y los compromisos en el aire. Nuestro asistente transcribe de forma inteligente tus juntas y recorridos de campo, identificando los puntos clave para delegar tareas automáticamente y rastrear su cumplimiento. Genera resúmenes ejecutivos precisos y archiva toda la documentación en un solo entorno centralizado.', 
       image: '/apps/asistente-reuniones.png' 
     },
     { 
