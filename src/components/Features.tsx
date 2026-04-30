@@ -23,7 +23,7 @@ export default function Features() {
     { 
       title: 'Control Presupuestal y Cortes', 
       desc: 'Sistematización financiera enfocada en obra. Control cruzado entre presupuesto base vs. ejecutado y auditoría ágil de cortes de subcontratistas.', 
-      image: '/apps/facturacion.png' 
+      image: '/apps/control-presupuestal.png' 
     },
     { 
       title: 'Bóveda Documental', 
