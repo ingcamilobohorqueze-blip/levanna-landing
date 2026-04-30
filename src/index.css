@@ -545,3 +545,38 @@ p {
     height: 55px;
   }
 }
+
+/* Product Icons Definition Fix */
+.product-icon-wrapper {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 8px 16px rgba(37,99,235,0.1);
+  overflow: hidden;
+  background: #ffffff; /* Original color on white background for light mode */
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.product-icon-img {
+  width: 80%; /* Slightly smaller for better padding */
+  height: 80%;
+  object-fit: contain;
+  transition: filter 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  .product-icon-wrapper {
+    background: var(--accent-gradient);
+    border-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  }
+  .product-icon-img {
+    filter: invert(1) brightness(2); /* Invert to white for dark backgrounds */
+  }
+}

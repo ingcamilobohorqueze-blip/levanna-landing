@@ -43,27 +43,15 @@ export default function Features() {
         <div className="grid-2">
           {products.map((product, idx) => (
             <div key={idx} className={`card-panel delay-${(idx % 3) + 1}`}>
-              <div style={{ 
-                width: '64px', 
-                height: '64px', 
-                borderRadius: '16px', 
-                background: 'var(--accent-gradient)', 
-                display: 'flex', 
-                alignItems: 'center', 
-                justifyContent: 'center', 
-                marginBottom: '1.5rem', 
-                boxShadow: '0 8px 16px rgba(37,99,235,0.2)',
-                padding: product.image ? '0' : '16px',
-                overflow: 'hidden'
-              }}>
+              <div className="product-icon-wrapper">
                 {product.image ? (
                   <img 
                     src={product.image} 
                     alt={product.title} 
-                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+                    className="product-icon-img"
                   />
                 ) : (
-                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ color: 'var(--accent-blue)' }}>
                     <path d={product.icon} />
                   </svg>
                 )}
