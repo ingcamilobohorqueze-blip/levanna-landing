@@ -1,11 +1,35 @@
 export default function Features() {
   const products = [
-    { title: 'Control de Acceso Inteligente', desc: 'Gestión multi-tenant y en tiempo real para la validación de personal, contratistas y maquinaria. Seguridad avanzada y trazabilidad total en el frente de obra.', icon: 'M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z' },
-    { title: 'Caja Menor con WhatsApp + IA', desc: 'Olvídate del registro manual. Tus residentes envían fotos de facturas por WhatsApp y nuestra IA extrae los datos, consolidando gastos logísticos al instante.', icon: 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z' },
-    { title: 'Asistente de Reuniones', desc: 'De la voz a la acción. Transcripción inteligente de juntas y recorridos de campo para delegar tareas automáticamente y rastrear cumplimientos.', icon: 'M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z' },
-    { title: 'Licitaciones 360 (próximamente)', desc: 'Análisis automatizado de pliegos. Identificamos riesgos legales, evaluamos viabilidad y extraemos hitos críticos en segundos para que nunca pierdas una oportunidad.', icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z' },
-    { title: 'Control Presupuestal y Cortes', desc: 'Sistematización financiera enfocada en obra. Control cruzado entre presupuesto base vs. ejecutado y auditoría ágil de cortes de subcontratistas.', icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' },
-    { title: 'Bóveda Documental', desc: 'La única fuente de verdad. Unificación de esquemas de trabajo, planos, versiones, registro fotográfico y contratos en la nube con acceso en tiempo real.', icon: 'M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z' }
+    { 
+      title: 'Control de Acceso Inteligente', 
+      desc: 'El fin de la infraestructura costosa y las planillas de papel. Nuestra aplicación nativa transforma la gestión de personal en obra o en oficina sin requerir equipos físicos ni mantenimientos. Un sistema de acceso 100% sin contacto que te brinda información en pantalla en tiempo real.', 
+      image: '/apps/control-acceso.png' 
+    },
+    { 
+      title: 'Caja Menor App Nativa', 
+      desc: 'Auditoría y control de gastos de campo, ahora en su propia App. Evolucionamos nuestra gestión financiera dejando atrás los reportes por WhatsApp. Con nuestra nueva aplicación nativa, tienes el control absoluto de tu flujo de caja.', 
+      image: '/apps/caja-menor.png' 
+    },
+    { 
+      title: 'Asistente de Reuniones', 
+      desc: 'Tu copiloto inteligente para comités y recorridos de obra. Olvídate de las actas manuales y los compromisos en el aire. Nuestro asistente transcribe de forma inteligente tus juntas y recorridos de campo, identificando los puntos clave.', 
+      image: '/apps/asistente-reuniones.png' 
+    },
+    { 
+      title: 'Licitaciones 360 (próximamente)', 
+      desc: 'Análisis automatizado de pliegos. Identificamos riesgos legales, evaluamos viabilidad y extraemos hitos críticos en segundos para que nunca pierdas una oportunidad.', 
+      image: '/apps/licitaciones.png' 
+    },
+    { 
+      title: 'Control Presupuestal y Cortes', 
+      desc: 'Sistematización financiera enfocada en obra. Control cruzado entre presupuesto base vs. ejecutado y auditoría ágil de cortes de subcontratistas.', 
+      icon: 'M13 7h8m0 0v8m0-8l-8 8-4-4-6 6' 
+    },
+    { 
+      title: 'Bóveda Documental', 
+      desc: 'La única fuente de verdad. Unificación de esquemas de trabajo, planos, versiones, registro fotográfico y contratos en la nube con acceso en tiempo real.', 
+      image: '/apps/boveda.png' 
+    }
   ];
 
   return (
@@ -19,13 +43,33 @@ export default function Features() {
         <div className="grid-2">
           {products.map((product, idx) => (
             <div key={idx} className={`card-panel delay-${(idx % 3) + 1}`}>
-              <div style={{ width: '56px', height: '56px', borderRadius: '14px', background: 'var(--accent-gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1.5rem', boxShadow: '0 8px 16px rgba(37,99,235,0.2)' }}>
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d={product.icon} />
-                </svg>
+              <div style={{ 
+                width: '64px', 
+                height: '64px', 
+                borderRadius: '16px', 
+                background: 'var(--accent-gradient)', 
+                display: 'flex', 
+                alignItems: 'center', 
+                justifyContent: 'center', 
+                marginBottom: '1.5rem', 
+                boxShadow: '0 8px 16px rgba(37,99,235,0.2)',
+                padding: product.image ? '0' : '16px',
+                overflow: 'hidden'
+              }}>
+                {product.image ? (
+                  <img 
+                    src={product.image} 
+                    alt={product.title} 
+                    style={{ width: '100%', height: '100%', objectFit: 'contain' }} 
+                  />
+                ) : (
+                  <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d={product.icon} />
+                  </svg>
+                )}
               </div>
-              <h3 style={{ fontSize: '1.4rem', color: 'var(--text-primary)' }}>{product.title}</h3>
-              <p style={{ marginTop: '0.8rem' }}>{product.desc}</p>
+              <h3 style={{ fontSize: '1.4rem', color: 'var(--text-primary)', marginBottom: '0.8rem' }}>{product.title}</h3>
+              <p style={{ lineHeight: '1.6', color: 'var(--text-secondary)' }}>{product.desc}</p>
             </div>
           ))}
         </div>
@@ -33,3 +77,4 @@ export default function Features() {
     </section>
   );
 }
+
