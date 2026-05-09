@@ -11,6 +11,7 @@ interface Product {
 export default function Features() {
   const [activeApp, setActiveApp] = useState<number>(0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
+  const [isDark, setIsDark] = useState<boolean>(true);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -18,7 +19,21 @@ export default function Features() {
     };
     checkMobile();
     window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+
+    const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+    setIsDark(darkModeMediaQuery.matches);
+    const themeChangeHandler = (e: MediaQueryListEvent) => setIsDark(e.matches);
+    
+    // Fallback for some browsers
+    if (darkModeMediaQuery.addEventListener) {
+      darkModeMediaQuery.addEventListener('change', themeChangeHandler);
+      return () => darkModeMediaQuery.removeEventListener('change', themeChangeHandler);
+    } else {
+      // @ts-ignore
+      darkModeMediaQuery.addListener(themeChangeHandler);
+      // @ts-ignore
+      return () => darkModeMediaQuery.removeListener(themeChangeHandler);
+    }
   }, []);
 
   const products: Product[] = [
@@ -56,50 +71,73 @@ export default function Features() {
 
   // Irregular organic positions around the center for desktop
   const nodePositions = [
-    { left: '20%', top: '22%' },   // Top Left
-    { left: '70%', top: '18%' },   // Top Right
-    { left: '12%', top: '60%' },   // Bottom Left
-    { left: '35%', top: '85%' },   // Bottom Center-Left
-    { left: '60%', top: '82%' },   // Bottom Center-Right
-    { left: '85%', top: '48%' },   // Right
+    { left: '20%', top: '22%', isRightSide: false },   // Top Left
+    { left: '70%', top: '18%', isRightSide: true },    // Top Right
+    { left: '12%', top: '60%', isRightSide: false },   // Bottom Left
+    { left: '35%', top: '85%', isRightSide: false },   // Bottom Center-Left
+    { left: '60%', top: '82%', isRightSide: true },    // Bottom Center-Right
+    { left: '85%', top: '48%', isRightSide: true },    // Right
   ];
   
   const centerPos = { left: '45%', top: '48%' };
 
+  // Dynamic positioning for the HUD Card to avoid blocking nodes
+  const activeNodeIsRight = nodePositions[activeApp].isRightSide;
+  const cardPositionStyle = activeNodeIsRight 
+    ? { left: '5%', bottom: '5%' } 
+    : { right: '3%', bottom: '5%' };
+
+  // Theme-based colors
+  const bgColor = isDark ? '#080C16' : 'var(--bg-secondary)';
+  const radialGradient = isDark 
+    ? 'radial-gradient(circle at 45% 48%, rgba(0, 112, 243, 0.12) 0%, rgba(8, 12, 22, 1) 65%)'
+    : 'radial-gradient(circle at 45% 48%, rgba(0, 112, 243, 0.05) 0%, var(--bg-secondary) 65%)';
+  const ringColor1 = isDark ? 'rgba(255,255,255,0.02)' : 'rgba(0,0,0,0.03)';
+  const ringColor2 = isDark ? 'rgba(0, 112, 243, 0.08)' : 'rgba(0, 112, 243, 0.1)';
+  const ringColor3 = isDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.05)';
+  const nodeBgInactive = isDark ? 'rgba(17, 24, 39, 0.7)' : 'rgba(255, 255, 255, 0.9)';
+  const nodeBorderInactive = isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)';
+  const textColor = isDark ? 'white' : 'var(--text-primary)';
+  const textSubColor = isDark ? '#E5E7EB' : 'var(--text-secondary)';
+  const cardBg = isDark 
+    ? 'linear-gradient(145deg, rgba(30, 38, 56, 0.6) 0%, rgba(15, 20, 31, 0.8) 100%)'
+    : 'rgba(255, 255, 255, 0.85)';
+  const cardBorder = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
+
   return (
-    <section id="soluciones-ia" style={{ position: 'relative', width: '100%', minHeight: isMobile ? 'auto' : '900px', background: '#080C16', overflow: 'hidden', padding: isMobile ? '4rem 1rem' : '0' }}>
+    <section id="soluciones-ia" style={{ position: 'relative', width: '100%', minHeight: isMobile ? 'auto' : '900px', background: bgColor, overflow: 'hidden', padding: isMobile ? '4rem 1rem' : '0', transition: 'background 0.3s ease' }}>
        
        {/* Background Deep Space & Rings */}
-       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: 'radial-gradient(circle at 45% 48%, rgba(0, 112, 243, 0.12) 0%, rgba(8, 12, 22, 1) 65%)', pointerEvents: 'none' }} />
+       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: radialGradient, pointerEvents: 'none' }} />
        
        {/* Giant Orbital Rings */}
-       <div style={{ position: 'absolute', top: '48%', left: '45%', transform: 'translate(-50%, -50%)', width: '900px', height: '900px', borderRadius: '50%', border: '1px solid rgba(255,255,255,0.02)', pointerEvents: 'none' }} />
-       <div style={{ position: 'absolute', top: '48%', left: '45%', transform: 'translate(-50%, -50%)', width: '700px', height: '700px', borderRadius: '50%', border: '1px solid rgba(0, 112, 243, 0.08)', boxShadow: 'inset 0 0 80px rgba(0,112,243,0.03)', pointerEvents: 'none' }} />
-       <div style={{ position: 'absolute', top: '48%', left: '45%', transform: 'translate(-50%, -50%)', width: '450px', height: '450px', borderRadius: '50%', border: '1px dashed rgba(255,255,255,0.04)', pointerEvents: 'none' }} />
+       <div style={{ position: 'absolute', top: '48%', left: '45%', transform: 'translate(-50%, -50%)', width: '900px', height: '900px', borderRadius: '50%', border: `1px solid ${ringColor1}`, pointerEvents: 'none' }} />
+       <div style={{ position: 'absolute', top: '48%', left: '45%', transform: 'translate(-50%, -50%)', width: '700px', height: '700px', borderRadius: '50%', border: `1px solid ${ringColor2}`, boxShadow: isDark ? 'inset 0 0 80px rgba(0,112,243,0.03)' : 'none', pointerEvents: 'none' }} />
+       <div style={{ position: 'absolute', top: '48%', left: '45%', transform: 'translate(-50%, -50%)', width: '450px', height: '450px', borderRadius: '50%', border: `1px dashed ${ringColor3}`, pointerEvents: 'none' }} />
 
-       {/* Floating Particles */}
+       {/* Floating Particles ('Luciérnagas') */}
        {!isMobile && [...Array(25)].map((_, i) => (
          <motion.div
            key={`particle-${i}`}
            style={{
              position: 'absolute',
-             width: Math.random() * 3 + 1 + 'px',
-             height: Math.random() * 3 + 1 + 'px',
-             background: 'rgba(0, 112, 243, 0.6)',
+             width: Math.random() * 4 + 2 + 'px', // Increased size
+             height: Math.random() * 4 + 2 + 'px',
+             background: isDark ? 'rgba(255, 255, 255, 0.9)' : '#1A2233', // Theme logic
              borderRadius: '50%',
              left: Math.random() * 100 + '%',
              top: Math.random() * 100 + '%',
-             boxShadow: '0 0 10px rgba(0, 112, 243, 0.8)',
+             boxShadow: isDark ? '0 0 15px rgba(255, 255, 255, 0.8), 0 0 5px #00E5FF' : 'none', // Glow in dark mode
              pointerEvents: 'none',
              zIndex: 1
            }}
            animate={{
              y: [0, Math.random() * -60 - 20, 0],
              x: [0, Math.random() * 40 - 20, 0],
-             opacity: [0.1, 0.7, 0.1],
+             opacity: isDark ? [0.2, 1, 0.2] : [0.1, 0.5, 0.1], // Increased opacity
            }}
            transition={{
-             duration: Math.random() * 5 + 5,
+             duration: Math.random() * 5 + 4,
              repeat: Infinity,
              ease: "easeInOut"
            }}
@@ -112,19 +150,19 @@ export default function Features() {
             
             {/* Title overlay */}
             <div style={{ position: 'absolute', top: '5%', left: '5%', zIndex: 40 }}>
-              <h2 style={{ fontSize: '2.8rem', color: 'white', margin: 0, textShadow: '0 0 20px rgba(0,0,0,0.5)' }}>
+              <h2 style={{ fontSize: '2.8rem', color: textColor, margin: 0, textShadow: isDark ? '0 0 20px rgba(0,0,0,0.5)' : 'none' }}>
                 Ecosistema <span className="text-gradient">Levanna</span>
               </h2>
-              <p style={{ color: '#9CA3AF', fontSize: '1.1rem', maxWidth: '400px', marginTop: '0.5rem' }}>
+              <p style={{ color: isDark ? '#9CA3AF' : 'var(--text-secondary)', fontSize: '1.1rem', maxWidth: '400px', marginTop: '0.5rem' }}>
                 Selecciona un nodo para explorar la interconexión de nuestras herramientas.
               </p>
             </div>
 
-            {/* SVG Connections */}
-            <svg style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', zIndex: 5 }}>
+            {/* SVG Connections (Perfectly centered, bottom z-index) */}
+            <svg style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}>
                <defs>
                  <filter id="neonGlow">
-                   <feGaussianBlur stdDeviation="4" result="coloredBlur"/>
+                   <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
                    <feMerge>
                      <feMergeNode in="coloredBlur"/>
                      <feMergeNode in="SourceGraphic"/>
@@ -137,7 +175,7 @@ export default function Features() {
                  return (
                    <g key={`connection-${i}`}>
                      {/* Static faint line */}
-                     <line x1={centerPos.left} y1={centerPos.top} x2={nodePositions[i].left} y2={nodePositions[i].top} stroke="rgba(255,255,255,0.06)" strokeWidth="1" strokeDasharray="3 6" />
+                     <line x1={centerPos.left} y1={centerPos.top} x2={nodePositions[i].left} y2={nodePositions[i].top} stroke={isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"} strokeWidth="2" strokeDasharray="3 6" />
                      {/* Animated glowing line when active */}
                      {isActive && (
                        <motion.line
@@ -145,10 +183,10 @@ export default function Features() {
                          animate={{ strokeDashoffset: 0, opacity: 1 }}
                          transition={{ strokeDashoffset: { duration: 1.2, repeat: Infinity, ease: "linear" }, opacity: { duration: 0.4 } }}
                          x1={centerPos.left} y1={centerPos.top} x2={nodePositions[i].left} y2={nodePositions[i].top}
-                         stroke="#00E5FF" // A brighter cyan/blue for the HUD feel
-                         strokeWidth="2"
+                         stroke="#00E5FF"
+                         strokeWidth="3"
                          strokeDasharray="8 12"
-                         filter="url(#neonGlow)"
+                         filter={isDark ? "url(#neonGlow)" : "none"}
                        />
                      )}
                    </g>
@@ -156,28 +194,36 @@ export default function Features() {
                })}
             </svg>
 
-            {/* Hub */}
+            {/* Hub Central (Official Isotipo) */}
             <div style={{
                position: 'absolute',
                left: centerPos.left,
                top: centerPos.top,
                transform: 'translate(-50%, -50%)',
-               width: '160px',
-               height: '160px',
+               width: '180px',
+               height: '180px',
                borderRadius: '50%',
-               background: 'radial-gradient(circle, rgba(17, 24, 39, 0.9) 0%, rgba(8, 12, 22, 1) 100%)',
-               border: '2px solid rgba(0, 229, 255, 0.4)',
-               boxShadow: '0 0 80px rgba(0, 112, 243, 0.5), inset 0 0 30px rgba(0, 229, 255, 0.2)',
+               background: isDark ? 'radial-gradient(circle, rgba(17, 24, 39, 0.9) 0%, rgba(8, 12, 22, 1) 100%)' : '#ffffff',
+               border: '2px solid rgba(0, 229, 255, 0.6)',
+               boxShadow: isDark ? '0 0 100px rgba(0, 112, 243, 0.6), inset 0 0 40px rgba(0, 229, 255, 0.3)' : '0 0 40px rgba(0, 112, 243, 0.3)',
                display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column',
                zIndex: 10
             }}>
-               <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '1px dashed rgba(0, 229, 255, 0.3)', animation: 'spin 15s linear infinite' }} />
-               <svg width="54" height="54" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 8px #00E5FF)' }}><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+               {/* Spinning dashed ring */}
+               <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.4)', animation: 'spin 20s linear infinite' }} />
+               {/* Official Isotipo */}
+               <img src="/isotipo.png" alt="Levanna Hub" style={{ width: '80px', height: '80px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' : 'none', zIndex: 11 }} />
             </div>
 
             {/* Nodes */}
             {products.map((product, i) => {
                const isActive = activeApp === i;
+               
+               // Logic for Logos: Dark Mode -> Monochrome. Light Mode -> Original colors.
+               const logoFilter = isDark 
+                 ? (isActive ? 'drop-shadow(0 0 8px rgba(255,255,255,0.8)) brightness(200%) grayscale(100%)' : 'grayscale(100%) opacity(0.7) brightness(150%)')
+                 : (isActive ? 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))' : 'opacity(0.8)');
+
                return (
                  <motion.div
                    key={`node-${i}`}
@@ -189,92 +235,88 @@ export default function Features() {
                      width: '90px',
                      height: '90px',
                      borderRadius: '50%',
-                     background: isActive ? 'rgba(0, 229, 255, 0.1)' : 'rgba(17, 24, 39, 0.7)',
+                     background: isActive ? (isDark ? 'rgba(0, 229, 255, 0.15)' : 'rgba(0, 229, 255, 0.1)') : nodeBgInactive,
                      backdropFilter: 'blur(10px)',
                      WebkitBackdropFilter: 'blur(10px)',
-                     border: `2px solid ${isActive ? '#00E5FF' : 'rgba(255,255,255,0.1)'}`,
+                     border: `2px solid ${isActive ? '#00E5FF' : nodeBorderInactive}`,
                      display: 'flex', alignItems: 'center', justifyContent: 'center',
                      cursor: 'pointer',
                      zIndex: 20,
-                     boxShadow: isActive ? '0 0 40px rgba(0, 229, 255, 0.4), inset 0 0 20px rgba(0, 229, 255, 0.2)' : '0 10px 25px rgba(0,0,0,0.4)',
+                     // Enhanced Glow Effect for active node
+                     boxShadow: isActive ? '0 0 60px rgba(0, 229, 255, 0.8), inset 0 0 30px rgba(0, 229, 255, 0.4)' : (isDark ? '0 10px 25px rgba(0,0,0,0.4)' : '0 10px 20px rgba(0,0,0,0.05)'),
                    }}
-                   whileHover={{ scale: 1.1, boxShadow: isActive ? '0 0 50px rgba(0, 229, 255, 0.6)' : '0 10px 30px rgba(0, 229, 255, 0.2)' }}
+                   whileHover={{ scale: 1.1, boxShadow: isActive ? '0 0 80px rgba(0, 229, 255, 0.9)' : (isDark ? '0 10px 30px rgba(0, 229, 255, 0.2)' : '0 10px 30px rgba(0,0,0,0.1)') }}
                    onClick={() => setActiveApp(i)}
                  >
                     {/* Ring decoration */}
                     {isActive && (
                       <motion.div 
-                        style={{ position: 'absolute', width: '110px', height: '110px', borderRadius: '50%', border: '1px dashed rgba(0, 229, 255, 0.4)' }}
+                        style={{ position: 'absolute', width: '120px', height: '120px', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.5)' }}
                         animate={{ rotate: 360 }}
                         transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
                       />
                     )}
 
-                    {product.image ? (
-                       <img src={product.image} alt={product.title} style={{ width: '45px', height: '45px', objectFit: 'contain', filter: isActive ? 'drop-shadow(0 0 8px rgba(255,255,255,0.8))' : 'opacity(0.7)' }} />
-                    ) : (
-                       <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke={isActive ? '#ffffff' : '#9CA3AF'} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                         <path d={product.icon} />
-                       </svg>
+                    {product.image && (
+                       <img src={product.image} alt={product.title} style={{ width: '45px', height: '45px', objectFit: 'contain', filter: logoFilter, transition: 'filter 0.3s ease' }} />
                     )}
                  </motion.div>
                )
             })}
 
-            {/* Floating Glassmorphism Card */}
+            {/* Floating Glassmorphism Card (Dynamically Positioned) */}
             <div style={{
                position: 'absolute',
-               bottom: '5%',
-               right: '3%',
+               ...cardPositionStyle, // Dynamic placement to avoid blocking active node
                width: '420px',
                zIndex: 30,
-               perspective: '1000px'
+               perspective: '1000px',
+               transition: 'left 0.5s ease, right 0.5s ease' // Smooth transition when jumping sides
             }}>
                <AnimatePresence mode="wait">
                  <motion.div
                    key={activeApp}
-                   initial={{ opacity: 0, rotateX: 10, y: 50, scale: 0.95 }}
-                   animate={{ opacity: 1, rotateX: 0, y: 0, scale: 1 }}
-                   exit={{ opacity: 0, rotateX: -10, y: -20, scale: 0.95 }}
+                   initial={{ opacity: 0, rotateY: activeNodeIsRight ? -15 : 15, y: 50, scale: 0.95 }}
+                   animate={{ opacity: 1, rotateY: 0, y: 0, scale: 1 }}
+                   exit={{ opacity: 0, rotateY: activeNodeIsRight ? 15 : -15, y: -20, scale: 0.95 }}
                    transition={{ type: "spring", stiffness: 180, damping: 22 }}
                    style={{
-                     background: 'linear-gradient(145deg, rgba(30, 38, 56, 0.6) 0%, rgba(15, 20, 31, 0.8) 100%)',
+                     background: cardBg,
                      backdropFilter: 'blur(25px)',
                      WebkitBackdropFilter: 'blur(25px)',
-                     border: '1px solid rgba(255, 255, 255, 0.1)',
-                     borderTop: '1px solid rgba(255, 255, 255, 0.25)',
-                     borderLeft: '1px solid rgba(255, 255, 255, 0.15)',
+                     border: `1px solid ${cardBorder}`,
+                     borderTop: `1px solid ${isDark ? 'rgba(255, 255, 255, 0.25)' : 'rgba(255, 255, 255, 0.8)'}`,
                      borderRadius: '24px',
                      padding: '2rem',
-                     boxShadow: '0 30px 60px rgba(0,0,0,0.6), 0 0 30px rgba(0, 112, 243, 0.15)',
+                     boxShadow: isDark ? '0 30px 60px rgba(0,0,0,0.6), 0 0 30px rgba(0, 112, 243, 0.15)' : '0 20px 40px rgba(0,0,0,0.1)',
                    }}
                  >
                     {/* Header */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                       <div style={{ width: '54px', height: '54px', borderRadius: '16px', background: 'rgba(0,0,0,0.4)', border: '1px solid rgba(255,255,255,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: 'inset 0 2px 10px rgba(255,255,255,0.05)' }}>
-                         {products[activeApp].image && <img src={products[activeApp].image} alt="" style={{ width: '28px', height: '28px', filter: 'drop-shadow(0 0 5px rgba(255,255,255,0.3))' }} />}
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.5rem', paddingBottom: '1.5rem', borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}` }}>
+                       <div style={{ width: '54px', height: '54px', borderRadius: '16px', background: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.02)', border: `1px solid ${cardBorder}`, display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: isDark ? 'inset 0 2px 10px rgba(255,255,255,0.05)' : 'none' }}>
+                         {products[activeApp].image && <img src={products[activeApp].image} alt="" style={{ width: '28px', height: '28px', filter: isDark ? 'drop-shadow(0 0 5px rgba(255,255,255,0.3)) brightness(200%) grayscale(100%)' : 'none' }} />}
                        </div>
                        <div>
-                         <h3 style={{ margin: 0, color: 'white', fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', textShadow: '0 2px 4px rgba(0,0,0,0.5)' }}>{products[activeApp].title}</h3>
+                         <h3 style={{ margin: 0, color: textColor, fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', textShadow: isDark ? '0 2px 4px rgba(0,0,0,0.5)' : 'none' }}>{products[activeApp].title}</h3>
                          <span style={{ color: '#00E5FF', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '2px', opacity: 0.9 }}>SYSTEM ID: 0{activeApp + 1}</span>
                        </div>
                     </div>
                     
                     {/* Description */}
                     <div style={{ marginBottom: '1.5rem' }}>
-                      <div style={{ fontSize: '0.7rem', color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.8rem', fontWeight: 600 }}>Descripción</div>
-                      <p style={{ color: '#E5E7EB', fontSize: '0.95rem', lineHeight: '1.7', margin: 0, textShadow: '0 1px 2px rgba(0,0,0,0.3)' }}>{products[activeApp].desc}</p>
+                      <div style={{ fontSize: '0.7rem', color: isDark ? '#9CA3AF' : 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.8rem', fontWeight: 600 }}>Descripción</div>
+                      <p style={{ color: textSubColor, fontSize: '0.95rem', lineHeight: '1.7', margin: 0, textShadow: isDark ? '0 1px 2px rgba(0,0,0,0.3)' : 'none' }}>{products[activeApp].desc}</p>
                     </div>
 
                     {/* Status Footer */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}` }}>
                        <div>
-                         <div style={{ fontSize: '0.7rem', color: '#9CA3AF', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.4rem', fontWeight: 600 }}>Estado</div>
+                         <div style={{ fontSize: '0.7rem', color: isDark ? '#9CA3AF' : 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.4rem', fontWeight: 600 }}>Estado</div>
                          <div style={{ color: '#10B981', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 500 }}>
                            <span style={{ display: 'inline-block', width: '8px', height: '8px', background: '#10B981', borderRadius: '50%', boxShadow: '0 0 10px #10B981' }}></span> Operativo
                          </div>
                        </div>
-                       <button style={{ background: 'linear-gradient(90deg, var(--accent-blue) 0%, #00E5FF 100%)', color: '#080C16', border: 'none', padding: '0.7rem 1.5rem', borderRadius: '12px', fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 15px rgba(0, 229, 255, 0.4)', transition: 'transform 0.2s' }} onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+                       <button style={{ background: 'linear-gradient(90deg, var(--accent-blue) 0%, #00E5FF 100%)', color: 'white', border: 'none', padding: '0.7rem 1.5rem', borderRadius: '12px', fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 15px rgba(0, 229, 255, 0.4)', transition: 'transform 0.2s' }} onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
                          Abrir Módulo
                        </button>
                     </div>
@@ -283,26 +325,26 @@ export default function Features() {
             </div>
          </div>
        ) : (
-          /* Mobile Stacked Layout */
+          /* Mobile Stacked Layout (Minimal adaptions for theme) */
           <div style={{ display: 'flex', flexDirection: 'column', gap: '2.5rem', position: 'relative', zIndex: 10 }}>
             <div style={{ textAlign: 'center' }}>
-              <h2 style={{ fontSize: '2.2rem', color: 'white', margin: '0 0 0.5rem 0' }}>
+              <h2 style={{ fontSize: '2.2rem', color: textColor, margin: '0 0 0.5rem 0' }}>
                 Ecosistema <span className="text-gradient">Levanna</span>
               </h2>
-              <p style={{ color: '#9CA3AF', fontSize: '1rem' }}>Explora nuestras herramientas integradas.</p>
+              <p style={{ color: isDark ? '#9CA3AF' : 'var(--text-secondary)', fontSize: '1rem' }}>Explora nuestras herramientas integradas.</p>
             </div>
             
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
               <div style={{
-                width: '100px',
-                height: '100px',
+                width: '120px',
+                height: '120px',
                 borderRadius: '50%',
-                background: 'radial-gradient(circle, rgba(17, 24, 39, 0.9) 0%, rgba(8, 12, 22, 1) 100%)',
-                border: '2px solid rgba(0, 229, 255, 0.4)',
-                boxShadow: '0 0 40px rgba(0, 112, 243, 0.4)',
+                background: isDark ? 'radial-gradient(circle, rgba(17, 24, 39, 0.9) 0%, rgba(8, 12, 22, 1) 100%)' : '#ffffff',
+                border: '2px solid rgba(0, 229, 255, 0.6)',
+                boxShadow: isDark ? '0 0 40px rgba(0, 112, 243, 0.4)' : '0 0 30px rgba(0, 112, 243, 0.2)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>
-                <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                <img src="/isotipo.png" alt="Levanna Hub" style={{ width: '60px', height: '60px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' : 'none' }} />
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', padding: '0.5rem 1rem', width: '100%', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
@@ -317,15 +359,15 @@ export default function Features() {
                         minWidth: '70px',
                         height: '70px',
                         borderRadius: '20px',
-                        background: isActive ? 'rgba(0, 229, 255, 0.15)' : 'rgba(17, 24, 39, 0.8)',
+                        background: isActive ? (isDark ? 'rgba(0, 229, 255, 0.15)' : 'rgba(0, 229, 255, 0.1)') : nodeBgInactive,
                         backdropFilter: 'blur(10px)',
-                        border: `1px solid ${isActive ? '#00E5FF' : 'rgba(255,255,255,0.1)'}`,
+                        border: `1px solid ${isActive ? '#00E5FF' : nodeBorderInactive}`,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         flexShrink: 0,
-                        boxShadow: isActive ? '0 0 20px rgba(0, 229, 255, 0.3)' : '0 4px 10px rgba(0,0,0,0.2)',
+                        boxShadow: isActive ? '0 0 20px rgba(0, 229, 255, 0.3)' : '0 4px 10px rgba(0,0,0,0.1)',
                       }}
                     >
-                      {product.image && <img src={product.image} alt={product.title} style={{ width: '32px', height: '32px', objectFit: 'contain', filter: isActive ? 'drop-shadow(0 0 5px rgba(255,255,255,0.5))' : 'opacity(0.6)' }} />}
+                      {product.image && <img src={product.image} alt={product.title} style={{ width: '32px', height: '32px', objectFit: 'contain', filter: isDark ? (isActive ? 'drop-shadow(0 0 5px rgba(255,255,255,0.5)) brightness(200%) grayscale(100%)' : 'grayscale(100%) brightness(150%) opacity(0.6)') : (isActive ? 'none' : 'opacity(0.8)') }} />}
                     </motion.div>
                   );
                 })}
@@ -333,7 +375,7 @@ export default function Features() {
             </div>
 
             {/* Mobile Card */}
-            <div style={{ background: 'linear-gradient(145deg, rgba(30, 38, 56, 0.7) 0%, rgba(15, 20, 31, 0.9) 100%)', backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '1.5rem', border: '1px solid rgba(255, 255, 255, 0.1)', borderTop: '1px solid rgba(255,255,255,0.2)' }}>
+            <div style={{ background: cardBg, backdropFilter: 'blur(20px)', borderRadius: '24px', padding: '1.5rem', border: `1px solid ${cardBorder}` }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeApp}
@@ -342,16 +384,16 @@ export default function Features() {
                   exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.3 }}
                 >
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem', paddingBottom: '1rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
-                     <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: 'rgba(0,0,0,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid rgba(255,255,255,0.1)' }}>
-                      {products[activeApp].image && <img src={products[activeApp].image} alt="" style={{ width: '22px', height: '22px' }} />}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem', paddingBottom: '1rem', borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}` }}>
+                     <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${cardBorder}` }}>
+                      {products[activeApp].image && <img src={products[activeApp].image} alt="" style={{ width: '22px', height: '22px', filter: isDark ? 'brightness(200%) grayscale(100%)' : 'none' }} />}
                     </div>
                     <div>
-                      <h3 style={{ fontSize: '1rem', color: 'white', margin: 0, textTransform: 'uppercase' }}>{products[activeApp].title}</h3>
+                      <h3 style={{ fontSize: '1rem', color: textColor, margin: 0, textTransform: 'uppercase' }}>{products[activeApp].title}</h3>
                       <span style={{ color: '#00E5FF', fontSize: '0.7rem' }}>SYSTEM ID: 0{activeApp + 1}</span>
                     </div>
                   </div>
-                  <p style={{ lineHeight: '1.6', color: '#E5E7EB', fontSize: '0.9rem', margin: 0 }}>
+                  <p style={{ lineHeight: '1.6', color: textSubColor, fontSize: '0.9rem', margin: 0 }}>
                     {products[activeApp].desc}
                   </p>
                 </motion.div>
