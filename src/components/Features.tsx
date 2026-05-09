@@ -8,6 +8,51 @@ interface Product {
   icon?: string;
 }
 
+const HubLogoSVG = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" {...props}>
+    {/* Outer Crescents */}
+    <path d="M 25,10 A 46,46 0 0,0 25,90 A 42,42 0 0,1 10,50 A 42,42 0 0,1 25,10 Z" fill="currentColor" stroke="none"/>
+    <path d="M 75,90 A 46,46 0 0,0 75,10 A 42,42 0 0,1 90,50 A 42,42 0 0,1 75,90 Z" fill="currentColor" stroke="none"/>
+    
+    {/* Center Bullseye */}
+    <circle cx="50" cy="50" r="4.5" fill="none" strokeWidth="2.5"/>
+    <circle cx="50" cy="50" r="9" fill="none" strokeWidth="2"/>
+    <circle cx="50" cy="50" r="14" fill="none" strokeWidth="1.5"/>
+
+    {/* Broken inner ring (r=21) */}
+    <path d="M 57.5,35 A 21,21 0 0,1 65,42.5" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M 65,57.5 A 21,21 0 0,1 57.5,65" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M 42.5,65 A 21,21 0 0,1 35,57.5" strokeWidth="1.5" strokeLinecap="round"/>
+    <path d="M 35,42.5 A 21,21 0 0,1 42.5,35" strokeWidth="1.5" strokeLinecap="round"/>
+
+    {/* Diagonal Straight Lines & Dots */}
+    <line x1="59.9" y1="40.1" x2="68" y2="32" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="71" cy="29" r="4.5" fill="currentColor" stroke="none"/>
+
+    <line x1="59.9" y1="59.9" x2="68" y2="68" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="71" cy="71" r="4.5" fill="currentColor" stroke="none"/>
+
+    <line x1="40.1" y1="40.1" x2="32" y2="32" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="29" cy="29" r="4.5" fill="currentColor" stroke="none"/>
+
+    <line x1="40.1" y1="59.9" x2="32" y2="68" strokeWidth="1.5" strokeLinecap="round"/>
+    <circle cx="29" cy="71" r="4.5" fill="currentColor" stroke="none"/>
+
+    {/* Orthogonal Zig-Zag Lines & Large Dots */}
+    <path d="M 50,36 L 50,28 L 43,28 L 43,23" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="43" cy="18" r="6" fill="currentColor" stroke="none"/>
+
+    <path d="M 50,64 L 50,72 L 57,72 L 57,77" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="57" cy="82" r="6" fill="currentColor" stroke="none"/>
+
+    <path d="M 36,50 L 28,50 L 28,57 L 23,57" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="18" cy="57" r="6" fill="currentColor" stroke="none"/>
+
+    <path d="M 64,50 L 72,50 L 72,43 L 77,43" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <circle cx="82" cy="43" r="6" fill="currentColor" stroke="none"/>
+  </svg>
+);
+
 export default function Features() {
   const [activeApp, setActiveApp] = useState<number>(0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
@@ -211,8 +256,8 @@ export default function Features() {
             }}>
                {/* Spinning dashed ring */}
                <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.4)', animation: 'spin 20s linear infinite' }} />
-               {/* Official Isotipo */}
-               <img src="/isotipo.png" alt="Levanna Hub" style={{ width: '80px', height: '80px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' : 'none', zIndex: 11 }} />
+               {/* Official Hub Logo Vector */}
+               <HubLogoSVG style={{ width: '80px', height: '80px', color: isDark ? '#ffffff' : 'var(--accent-blue)', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.4))' : 'none', zIndex: 11 }} />
             </div>
 
             {/* Nodes */}
@@ -344,7 +389,7 @@ export default function Features() {
                 boxShadow: isDark ? '0 0 40px rgba(0, 112, 243, 0.4)' : '0 0 30px rgba(0, 112, 243, 0.2)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>
-                <img src="/isotipo.png" alt="Levanna Hub" style={{ width: '60px', height: '60px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' : 'none' }} />
+                <HubLogoSVG style={{ width: '60px', height: '60px', color: isDark ? '#ffffff' : 'var(--accent-blue)', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.4))' : 'none', zIndex: 11 }} />
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', padding: '0.5rem 1rem', width: '100%', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
