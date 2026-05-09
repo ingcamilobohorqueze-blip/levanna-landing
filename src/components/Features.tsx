@@ -83,16 +83,17 @@ export default function Features() {
                   
                   return (
                     <g key={`line-${i}`}>
-                      <line x1="280" y1="280" x2={x2} y2={y2} stroke="rgba(107, 114, 128, 0.2)" strokeWidth="2" strokeDasharray="6 6" />
+                      <line x1="280" y1="280" x2={x2} y2={y2} stroke="rgba(107, 114, 128, 0.2)" strokeWidth="2" strokeDasharray="4 6" />
                       {isActive && (
                         <motion.line
-                          initial={{ pathLength: 0, opacity: 0 }}
-                          animate={{ pathLength: 1, opacity: 1 }}
-                          transition={{ duration: 0.6, ease: "easeOut" }}
+                          initial={{ strokeDashoffset: 0, opacity: 0 }}
+                          animate={{ strokeDashoffset: -40, opacity: 1 }}
+                          transition={{ strokeDashoffset: { duration: 1, repeat: Infinity, ease: "linear" }, opacity: { duration: 0.3 } }}
                           x1="280" y1="280" x2={x2} y2={y2}
                           stroke="var(--accent-blue)"
                           strokeWidth="3"
-                          style={{ filter: 'drop-shadow(0 0 8px var(--accent-blue))' }}
+                          strokeDasharray="4 6"
+                          style={{ filter: 'drop-shadow(0 0 6px var(--accent-blue))' }}
                         />
                       )}
                     </g>
@@ -109,14 +110,16 @@ export default function Features() {
                 width: `${centerSize}px`,
                 height: `${centerSize}px`,
                 borderRadius: '50%',
-                background: '#1A2233',
+                background: 'rgba(26, 34, 51, 0.9)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
                 border: '2px solid var(--accent-blue)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexDirection: 'column',
                 zIndex: 10,
-                boxShadow: '0 0 35px rgba(0, 112, 243, 0.25)'
+                boxShadow: '0 0 40px rgba(0, 112, 243, 0.3), inset 0 0 20px rgba(0, 112, 243, 0.2)'
               }}>
                 <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                 <span style={{ color: 'white', fontWeight: 600, marginTop: '0.4rem', fontSize: '0.85rem' }}>Tenant Hub</span>
@@ -139,17 +142,19 @@ export default function Features() {
                       width: '70px',
                       height: '70px',
                       borderRadius: '50%',
-                      background: isActive ? '#1A2233' : 'var(--panel-bg)',
-                      border: `2px solid ${isActive ? 'var(--accent-blue)' : '#6B7280'}`,
+                      background: isActive ? 'rgba(26, 34, 51, 0.8)' : 'rgba(255, 255, 255, 0.03)',
+                      backdropFilter: 'blur(12px)',
+                      WebkitBackdropFilter: 'blur(12px)',
+                      border: `2px solid ${isActive ? 'var(--accent-blue)' : 'rgba(107, 114, 128, 0.4)'}`,
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                       cursor: 'pointer',
                       zIndex: 20,
-                      boxShadow: isActive ? '0 0 20px rgba(0, 112, 243, 0.4)' : '0 4px 10px rgba(0,0,0,0.2)',
-                      transition: 'border-color 0.3s, background-color 0.3s'
+                      boxShadow: isActive ? '0 0 25px rgba(26, 34, 51, 0.8), inset 0 0 10px rgba(0, 112, 243, 0.3)' : '0 4px 15px rgba(0,0,0,0.1)',
+                      transition: 'all 0.3s ease'
                     }}
-                    whileHover={{ scale: 1.12 }}
+                    whileHover={{ scale: 1.15, boxShadow: isActive ? '0 0 30px rgba(26, 34, 51, 0.9), inset 0 0 12px rgba(0, 112, 243, 0.4)' : '0 8px 25px rgba(0,0,0,0.2)' }}
                     whileTap={{ scale: 0.95 }}
                     onClick={() => setActiveApp(i)}
                   >
@@ -166,14 +171,14 @@ export default function Features() {
             </div>
 
             {/* Reading Panel (Text Area) */}
-            <div style={{ flex: 1, minWidth: '380px', maxWidth: '500px', background: 'var(--panel-bg)', borderRadius: '24px', padding: '3rem 2.5rem', border: '1px solid var(--panel-border)', minHeight: '380px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+            <div style={{ flex: 1, minWidth: '380px', maxWidth: '500px', background: 'rgba(255, 255, 255, 0.02)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', borderRadius: '24px', padding: '3rem 2.5rem', border: '1px solid rgba(255, 255, 255, 0.08)', minHeight: '380px', display: 'flex', flexDirection: 'column', justifyContent: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeApp}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -15 }}
-                  transition={{ duration: 0.4, ease: "easeOut" }}
+                  initial={{ opacity: 0, y: 30, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -30, scale: 0.98 }}
+                  transition={{ duration: 0.5, type: "spring", bounce: 0.3 }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1.2rem', marginBottom: '1.5rem' }}>
                     <div style={{ width: '56px', height: '56px', borderRadius: '16px', background: '#1A2233', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--accent-blue)', flexShrink: 0, boxShadow: '0 4px 12px rgba(0, 112, 243, 0.15)' }}>
@@ -204,13 +209,15 @@ export default function Features() {
                 width: '90px',
                 height: '90px',
                 borderRadius: '50%',
-                background: '#1A2233',
+                background: 'rgba(26, 34, 51, 0.9)',
+                backdropFilter: 'blur(12px)',
+                WebkitBackdropFilter: 'blur(12px)',
                 border: '2px solid var(--accent-blue)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 flexDirection: 'column',
-                boxShadow: '0 0 25px rgba(0, 112, 243, 0.3)'
+                boxShadow: '0 0 30px rgba(0, 112, 243, 0.3), inset 0 0 15px rgba(0, 112, 243, 0.2)'
               }}>
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                 <span style={{ color: 'white', fontWeight: 600, marginTop: '0.2rem', fontSize: '0.75rem' }}>Hub</span>
@@ -229,14 +236,16 @@ export default function Features() {
                         minWidth: '65px',
                         height: '65px',
                         borderRadius: '20px',
-                        background: isActive ? '#1A2233' : 'var(--panel-bg)',
-                        border: `2px solid ${isActive ? 'var(--accent-blue)' : '#6B7280'}`,
+                        background: isActive ? 'rgba(26, 34, 51, 0.8)' : 'rgba(255, 255, 255, 0.03)',
+                        backdropFilter: 'blur(10px)',
+                        WebkitBackdropFilter: 'blur(10px)',
+                        border: `2px solid ${isActive ? 'var(--accent-blue)' : 'rgba(107, 114, 128, 0.4)'}`,
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         flexShrink: 0,
                         transition: 'all 0.3s',
-                        boxShadow: isActive ? '0 0 15px rgba(0, 112, 243, 0.3)' : '0 4px 6px rgba(0,0,0,0.1)',
+                        boxShadow: isActive ? '0 0 20px rgba(26, 34, 51, 0.8), inset 0 0 8px rgba(0, 112, 243, 0.3)' : '0 4px 10px rgba(0,0,0,0.1)',
                       }}
                     >
                       {product.image ? (
@@ -253,14 +262,14 @@ export default function Features() {
             </div>
 
             {/* Reading Panel Mobile */}
-            <div style={{ background: 'var(--panel-bg)', borderRadius: '24px', padding: '2rem 1.5rem', border: '1px solid var(--panel-border)', minHeight: '300px' }}>
+            <div style={{ background: 'rgba(255, 255, 255, 0.02)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)', borderRadius: '24px', padding: '2rem 1.5rem', border: '1px solid rgba(255, 255, 255, 0.08)', minHeight: '300px', boxShadow: '0 15px 35px rgba(0,0,0,0.2)' }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={activeApp}
-                  initial={{ opacity: 0, x: -15 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: 15 }}
-                  transition={{ duration: 0.3, ease: "easeOut" }}
+                  initial={{ opacity: 0, y: 20, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -20, scale: 0.98 }}
+                  transition={{ duration: 0.4, type: "spring", bounce: 0.2 }}
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1.2rem' }}>
                      <div style={{ width: '40px', height: '40px', borderRadius: '10px', background: '#1A2233', display: 'flex', alignItems: 'center', justifyContent: 'center', border: '1px solid var(--accent-blue)', flexShrink: 0 }}>
