@@ -251,7 +251,7 @@ export default function Features() {
                      boxShadow: isActive ? '0 0 60px rgba(0, 229, 255, 0.8), inset 0 0 30px rgba(0, 229, 255, 0.4)' : (isDark ? '0 10px 25px rgba(0,0,0,0.4)' : '0 10px 20px rgba(0,0,0,0.05)'),
                    }}
                    whileHover={{ scale: 1.1, boxShadow: isActive ? '0 0 80px rgba(0, 229, 255, 0.9)' : (isDark ? '0 10px 30px rgba(0, 229, 255, 0.2)' : '0 10px 30px rgba(0,0,0,0.1)') }}
-                   onClick={() => setActiveApp(i)}
+                   onTap={() => setActiveApp(i)}
                  >
                     {/* Ring decoration */}
                     {isActive && (
@@ -362,7 +362,7 @@ export default function Features() {
                   return (
                     <motion.div
                       key={`mob-node-${i}`}
-                      onClick={() => setActiveApp(i)}
+                      onTap={() => setActiveApp(i)}
                       whileTap={{ scale: 0.95 }}
                       style={{
                         minWidth: '70px',
@@ -373,6 +373,11 @@ export default function Features() {
                         border: `1px solid ${isActive ? '#00E5FF' : nodeBorderInactive}`,
                         display: 'flex', alignItems: 'center', justifyContent: 'center',
                         flexShrink: 0,
+                        position: 'relative',
+                        cursor: 'pointer',
+                        zIndex: 25,
+                        touchAction: 'manipulation',
+                        userSelect: 'none',
                         boxShadow: isActive ? '0 0 20px rgba(0, 229, 255, 0.3)' : '0 4px 10px rgba(0,0,0,0.1)',
                       }}
                     >
@@ -402,9 +407,21 @@ export default function Features() {
                       <span style={{ color: '#00E5FF', fontSize: '0.7rem' }}>SYSTEM ID: 0{activeApp + 1}</span>
                     </div>
                   </div>
-                  <p style={{ lineHeight: '1.6', color: textSubColor, fontSize: '0.9rem', margin: 0 }}>
+                  <p style={{ lineHeight: '1.6', color: textSubColor, fontSize: '0.9rem', margin: '0 0 1.5rem 0' }}>
                     {products[activeApp].desc}
                   </p>
+
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}` }}>
+                    <div>
+                      <div style={{ fontSize: '0.65rem', color: isDark ? '#9CA3AF' : 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.2rem', fontWeight: 600 }}>Estado</div>
+                      <div style={{ color: '#10B981', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 500 }}>
+                        <span style={{ display: 'inline-block', width: '6px', height: '6px', background: '#10B981', borderRadius: '50%', boxShadow: '0 0 8px #10B981' }}></span> Operativo
+                      </div>
+                    </div>
+                    <button style={{ background: 'linear-gradient(90deg, var(--accent-blue) 0%, #00E5FF 100%)', color: 'white', border: 'none', padding: '0.6rem 1.2rem', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 12px rgba(0, 229, 255, 0.3)' }}>
+                      Abrir Módulo
+                    </button>
+                  </div>
                 </motion.div>
               </AnimatePresence>
             </div>
