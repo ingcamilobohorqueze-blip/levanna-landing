@@ -72,12 +72,12 @@ export default function Features() {
   ];
 
   const nodePositions = [
-    { x: 20, y: 22, isRightSide: false },   // Top Left
-    { x: 70, y: 18, isRightSide: true },    // Top Right
-    { x: 12, y: 60, isRightSide: false },   // Bottom Left
-    { x: 35, y: 85, isRightSide: false },   // Bottom Center-Left
-    { x: 60, y: 82, isRightSide: true },    // Bottom Center-Right
-    { x: 85, y: 48, isRightSide: true },    // Right
+    { x: 28, y: 28, isRightSide: false },   // Top Left
+    { x: 62, y: 25, isRightSide: true },    // Top Right
+    { x: 22, y: 55, isRightSide: false },   // Bottom Left
+    { x: 40, y: 75, isRightSide: false },   // Bottom Center-Left
+    { x: 55, y: 72, isRightSide: true },    // Bottom Center-Right
+    { x: 75, y: 48, isRightSide: true },    // Right
   ];
   
   const centerPos = { x: 45, y: 48 };
@@ -186,7 +186,7 @@ export default function Features() {
                        <motion.line
                          initial={{ strokeDashoffset: 100, opacity: 0 }}
                          animate={{ strokeDashoffset: 0, opacity: 1 }}
-                         transition={{ strokeDashoffset: { duration: 1.2, repeat: Infinity, ease: "linear" }, opacity: { duration: 0.4 } }}
+                         transition={{ strokeDashoffset: { duration: 6, repeat: Infinity, ease: "linear" }, opacity: { duration: 0.4 } }}
                          x1={centerPos.x} y1={centerPos.y} x2={nodePositions[i].x} y2={nodePositions[i].y}
                          stroke="#00E5FF"
                          strokeWidth="0.6"
@@ -205,19 +205,19 @@ export default function Features() {
                left: `${centerPos.x}%`,
                top: `${centerPos.y}%`,
                transform: 'translate(-50%, -50%)',
-               width: '180px',
-               height: '180px',
+               width: '360px',
+               height: '360px',
                borderRadius: '50%',
-               background: isDark ? 'radial-gradient(circle, rgba(17, 24, 39, 0.9) 0%, rgba(8, 12, 22, 1) 100%)' : '#ffffff',
+               background: isDark ? 'radial-gradient(circle, rgba(17, 24, 39, 0.95) 0%, rgba(8, 12, 22, 1) 100%)' : '#ffffff',
                border: '2px solid rgba(0, 229, 255, 0.6)',
-               boxShadow: isDark ? '0 0 100px rgba(0, 112, 243, 0.6), inset 0 0 40px rgba(0, 229, 255, 0.3)' : '0 0 40px rgba(0, 112, 243, 0.3)',
+               boxShadow: isDark ? '0 0 120px rgba(0, 112, 243, 0.7), inset 0 0 50px rgba(0, 229, 255, 0.3)' : '0 0 50px rgba(0, 112, 243, 0.3)',
                display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column',
                zIndex: 10
             }}>
                {/* Spinning dashed ring */}
-               <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.4)', animation: 'spin 20s linear infinite' }} />
+               <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.4)', animation: 'spin 30s linear infinite' }} />
                {/* Official Isotipo */}
-               <img src="/isotipo.png" alt="Levanna Hub" style={{ width: '80px', height: '80px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.4))' : 'none', zIndex: 11 }} />
+               <img src="/levanna-logo-hub.png" alt="Levanna Hub" style={{ width: '160px', height: '160px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 15px rgba(255,255,255,0.4))' : 'none', zIndex: 11 }} />
             </div>
 
             {/* Nodes */}
@@ -314,7 +314,7 @@ export default function Features() {
                     </div>
 
                     {/* Status Footer */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}` }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}` }}>
                        <div>
                          <div style={{ fontSize: '0.7rem', color: isDark ? '#9CA3AF' : 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.4rem', fontWeight: 600 }}>Estado</div>
                          <div style={{ color: '#10B981', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 500 }}>
@@ -341,15 +341,19 @@ export default function Features() {
             
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
               <div style={{
-                width: '120px',
-                height: '120px',
+                width: '240px',
+                height: '240px',
                 borderRadius: '50%',
-                background: isDark ? 'radial-gradient(circle, rgba(17, 24, 39, 0.9) 0%, rgba(8, 12, 22, 1) 100%)' : '#ffffff',
+                background: isDark ? 'radial-gradient(circle, rgba(17, 24, 39, 0.95) 0%, rgba(8, 12, 22, 1) 100%)' : '#ffffff',
                 border: '2px solid rgba(0, 229, 255, 0.6)',
-                boxShadow: isDark ? '0 0 40px rgba(0, 112, 243, 0.4)' : '0 0 30px rgba(0, 112, 243, 0.2)',
-                display: 'flex', alignItems: 'center', justifyContent: 'center'
+                boxShadow: isDark ? '0 0 120px rgba(0, 112, 243, 0.7), inset 0 0 50px rgba(0, 229, 255, 0.3)' : '0 0 50px rgba(0, 112, 243, 0.3)',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column',
+                zIndex: 10
               }}>
-                <img src="/isotipo.png" alt="Levanna Hub" style={{ width: '60px', height: '60px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' : 'none', zIndex: 11 }} />
+                {/* Spinning dashed ring */}
+                <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.4)', animation: 'spin 30s linear infinite' }} />
+                {/* Official Isotipo */}
+                <img src="/levanna-logo-hub.png" alt="Levanna Hub" style={{ width: '160px', height: '160px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 15px rgba(255,255,255,0.4))' : 'none', zIndex: 11 }} />
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', padding: '0.5rem 1rem', width: '100%', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
