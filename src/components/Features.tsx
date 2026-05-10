@@ -8,50 +8,7 @@ interface Product {
   icon?: string;
 }
 
-const HubLogoSVG = (props: React.SVGProps<SVGSVGElement>) => (
-  <svg viewBox="0 0 100 100" fill="none" stroke="currentColor" {...props}>
-    {/* Outer Crescents */}
-    <path d="M 25,10 A 46,46 0 0,0 25,90 A 42,42 0 0,1 10,50 A 42,42 0 0,1 25,10 Z" fill="currentColor" stroke="none"/>
-    <path d="M 75,90 A 46,46 0 0,0 75,10 A 42,42 0 0,1 90,50 A 42,42 0 0,1 75,90 Z" fill="currentColor" stroke="none"/>
-    
-    {/* Center Bullseye */}
-    <circle cx="50" cy="50" r="4.5" fill="none" strokeWidth="2.5"/>
-    <circle cx="50" cy="50" r="9" fill="none" strokeWidth="2"/>
-    <circle cx="50" cy="50" r="14" fill="none" strokeWidth="1.5"/>
 
-    {/* Broken inner ring (r=21) */}
-    <path d="M 57.5,35 A 21,21 0 0,1 65,42.5" strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M 65,57.5 A 21,21 0 0,1 57.5,65" strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M 42.5,65 A 21,21 0 0,1 35,57.5" strokeWidth="1.5" strokeLinecap="round"/>
-    <path d="M 35,42.5 A 21,21 0 0,1 42.5,35" strokeWidth="1.5" strokeLinecap="round"/>
-
-    {/* Diagonal Straight Lines & Dots */}
-    <line x1="59.9" y1="40.1" x2="68" y2="32" strokeWidth="1.5" strokeLinecap="round"/>
-    <circle cx="71" cy="29" r="4.5" fill="currentColor" stroke="none"/>
-
-    <line x1="59.9" y1="59.9" x2="68" y2="68" strokeWidth="1.5" strokeLinecap="round"/>
-    <circle cx="71" cy="71" r="4.5" fill="currentColor" stroke="none"/>
-
-    <line x1="40.1" y1="40.1" x2="32" y2="32" strokeWidth="1.5" strokeLinecap="round"/>
-    <circle cx="29" cy="29" r="4.5" fill="currentColor" stroke="none"/>
-
-    <line x1="40.1" y1="59.9" x2="32" y2="68" strokeWidth="1.5" strokeLinecap="round"/>
-    <circle cx="29" cy="71" r="4.5" fill="currentColor" stroke="none"/>
-
-    {/* Orthogonal Zig-Zag Lines & Large Dots */}
-    <path d="M 50,36 L 50,28 L 43,28 L 43,23" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="43" cy="18" r="6" fill="currentColor" stroke="none"/>
-
-    <path d="M 50,64 L 50,72 L 57,72 L 57,77" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="57" cy="82" r="6" fill="currentColor" stroke="none"/>
-
-    <path d="M 36,50 L 28,50 L 28,57 L 23,57" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="18" cy="57" r="6" fill="currentColor" stroke="none"/>
-
-    <path d="M 64,50 L 72,50 L 72,43 L 77,43" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-    <circle cx="82" cy="43" r="6" fill="currentColor" stroke="none"/>
-  </svg>
-);
 
 export default function Features() {
   const [activeApp, setActiveApp] = useState<number>(0);
@@ -114,17 +71,16 @@ export default function Features() {
     }
   ];
 
-  // Irregular organic positions around the center for desktop
   const nodePositions = [
-    { left: '20%', top: '22%', isRightSide: false },   // Top Left
-    { left: '70%', top: '18%', isRightSide: true },    // Top Right
-    { left: '12%', top: '60%', isRightSide: false },   // Bottom Left
-    { left: '35%', top: '85%', isRightSide: false },   // Bottom Center-Left
-    { left: '60%', top: '82%', isRightSide: true },    // Bottom Center-Right
-    { left: '85%', top: '48%', isRightSide: true },    // Right
+    { x: 20, y: 22, isRightSide: false },   // Top Left
+    { x: 70, y: 18, isRightSide: true },    // Top Right
+    { x: 12, y: 60, isRightSide: false },   // Bottom Left
+    { x: 35, y: 85, isRightSide: false },   // Bottom Center-Left
+    { x: 60, y: 82, isRightSide: true },    // Bottom Center-Right
+    { x: 85, y: 48, isRightSide: true },    // Right
   ];
   
-  const centerPos = { left: '45%', top: '48%' };
+  const centerPos = { x: 45, y: 48 };
 
   // Dynamic positioning for the HUD Card to avoid blocking nodes
   const activeNodeIsRight = nodePositions[activeApp].isRightSide;
@@ -204,10 +160,14 @@ export default function Features() {
             </div>
 
             {/* SVG Connections (Perfectly centered, bottom z-index) */}
-            <svg style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}>
+            <svg 
+               viewBox="0 0 100 100" 
+               preserveAspectRatio="none"
+               style={{ position: 'absolute', width: '100%', height: '100%', pointerEvents: 'none', zIndex: 0 }}
+             >
                <defs>
                  <filter id="neonGlow">
-                   <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+                   <feGaussianBlur stdDeviation="0.6" result="coloredBlur"/>
                    <feMerge>
                      <feMergeNode in="coloredBlur"/>
                      <feMergeNode in="SourceGraphic"/>
@@ -220,17 +180,17 @@ export default function Features() {
                  return (
                    <g key={`connection-${i}`}>
                      {/* Static faint line */}
-                     <line x1={centerPos.left} y1={centerPos.top} x2={nodePositions[i].left} y2={nodePositions[i].top} stroke={isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)"} strokeWidth="2" strokeDasharray="3 6" />
+                     <line x1={centerPos.x} y1={centerPos.y} x2={nodePositions[i].x} y2={nodePositions[i].y} stroke={isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)"} strokeWidth="0.4" strokeDasharray="1 2" />
                      {/* Animated glowing line when active */}
                      {isActive && (
                        <motion.line
                          initial={{ strokeDashoffset: 100, opacity: 0 }}
                          animate={{ strokeDashoffset: 0, opacity: 1 }}
                          transition={{ strokeDashoffset: { duration: 1.2, repeat: Infinity, ease: "linear" }, opacity: { duration: 0.4 } }}
-                         x1={centerPos.left} y1={centerPos.top} x2={nodePositions[i].left} y2={nodePositions[i].top}
+                         x1={centerPos.x} y1={centerPos.y} x2={nodePositions[i].x} y2={nodePositions[i].y}
                          stroke="#00E5FF"
-                         strokeWidth="3"
-                         strokeDasharray="8 12"
+                         strokeWidth="0.6"
+                         strokeDasharray="2 3"
                          filter={isDark ? "url(#neonGlow)" : "none"}
                        />
                      )}
@@ -242,8 +202,8 @@ export default function Features() {
             {/* Hub Central (Official Isotipo) */}
             <div style={{
                position: 'absolute',
-               left: centerPos.left,
-               top: centerPos.top,
+               left: `${centerPos.x}%`,
+               top: `${centerPos.y}%`,
                transform: 'translate(-50%, -50%)',
                width: '180px',
                height: '180px',
@@ -256,17 +216,17 @@ export default function Features() {
             }}>
                {/* Spinning dashed ring */}
                <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.4)', animation: 'spin 20s linear infinite' }} />
-               {/* Official Hub Logo Vector */}
-               <HubLogoSVG style={{ width: '80px', height: '80px', color: isDark ? '#ffffff' : 'var(--accent-blue)', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.4))' : 'none', zIndex: 11 }} />
+               {/* Official Isotipo */}
+               <img src="/isotipo.png" alt="Levanna Hub" style={{ width: '80px', height: '80px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.4))' : 'none', zIndex: 11 }} />
             </div>
 
             {/* Nodes */}
             {products.map((product, i) => {
                const isActive = activeApp === i;
                
-               // Logic for Logos: Dark Mode -> Monochrome. Light Mode -> Original colors.
+               // Logic for Logos: Dark Mode -> Pure White. Light Mode -> Original colors.
                const logoFilter = isDark 
-                 ? (isActive ? 'drop-shadow(0 0 8px rgba(255,255,255,0.8)) brightness(200%) grayscale(100%)' : 'grayscale(100%) opacity(0.7) brightness(150%)')
+                 ? (isActive ? 'drop-shadow(0 0 8px rgba(255,255,255,0.9)) brightness(0) invert(1)' : 'brightness(0) invert(1) opacity(0.6)')
                  : (isActive ? 'drop-shadow(0 4px 6px rgba(0,0,0,0.1))' : 'opacity(0.8)');
 
                return (
@@ -274,8 +234,8 @@ export default function Features() {
                    key={`node-${i}`}
                    style={{
                      position: 'absolute',
-                     left: nodePositions[i].left,
-                     top: nodePositions[i].top,
+                     left: `${nodePositions[i].x}%`,
+                     top: `${nodePositions[i].y}%`,
                      transform: 'translate(-50%, -50%)',
                      width: '90px',
                      height: '90px',
@@ -389,7 +349,7 @@ export default function Features() {
                 boxShadow: isDark ? '0 0 40px rgba(0, 112, 243, 0.4)' : '0 0 30px rgba(0, 112, 243, 0.2)',
                 display: 'flex', alignItems: 'center', justifyContent: 'center'
               }}>
-                <HubLogoSVG style={{ width: '60px', height: '60px', color: isDark ? '#ffffff' : 'var(--accent-blue)', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.4))' : 'none', zIndex: 11 }} />
+                <img src="/isotipo.png" alt="Levanna Hub" style={{ width: '60px', height: '60px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 10px rgba(255,255,255,0.2))' : 'none', zIndex: 11 }} />
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', padding: '0.5rem 1rem', width: '100%', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
@@ -412,7 +372,7 @@ export default function Features() {
                         boxShadow: isActive ? '0 0 20px rgba(0, 229, 255, 0.3)' : '0 4px 10px rgba(0,0,0,0.1)',
                       }}
                     >
-                      {product.image && <img src={product.image} alt={product.title} style={{ width: '32px', height: '32px', objectFit: 'contain', filter: isDark ? (isActive ? 'drop-shadow(0 0 5px rgba(255,255,255,0.5)) brightness(200%) grayscale(100%)' : 'grayscale(100%) brightness(150%) opacity(0.6)') : (isActive ? 'none' : 'opacity(0.8)') }} />}
+                      {product.image && <img src={product.image} alt={product.title} style={{ width: '32px', height: '32px', objectFit: 'contain', filter: isDark ? (isActive ? 'drop-shadow(0 0 5px rgba(255,255,255,0.5)) brightness(0) invert(1)' : 'brightness(0) invert(1) opacity(0.6)') : (isActive ? 'none' : 'opacity(0.8)') }} />}
                     </motion.div>
                   );
                 })}
@@ -431,7 +391,7 @@ export default function Features() {
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '1rem', paddingBottom: '1rem', borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}` }}>
                      <div style={{ width: '44px', height: '44px', borderRadius: '12px', background: isDark ? 'rgba(0,0,0,0.4)' : 'rgba(0,0,0,0.03)', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `1px solid ${cardBorder}` }}>
-                      {products[activeApp].image && <img src={products[activeApp].image} alt="" style={{ width: '22px', height: '22px', filter: isDark ? 'brightness(200%) grayscale(100%)' : 'none' }} />}
+                      {products[activeApp].image && <img src={products[activeApp].image} alt="" style={{ width: '22px', height: '22px', filter: isDark ? 'brightness(0) invert(1)' : 'none' }} />}
                     </div>
                     <div>
                       <h3 style={{ fontSize: '1rem', color: textColor, margin: 0, textTransform: 'uppercase' }}>{products[activeApp].title}</h3>
