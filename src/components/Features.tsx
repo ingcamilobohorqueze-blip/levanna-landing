@@ -217,7 +217,7 @@ export default function Features() {
                {/* Spinning dashed ring */}
                <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.4)', animation: 'spin 30s linear infinite' }} />
                {/* Official Isotipo */}
-               <img src="/levanna-logo-hub.png" alt="Levanna Hub" style={{ width: '160px', height: '160px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 15px rgba(255,255,255,0.4))' : 'none', zIndex: 11 }} />
+                <img src="/levanna-logo-hub.png" alt="Levanna Hub" style={{ width: '160px', height: '160px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 20px rgba(255,255,255,0.4)) brightness(0) invert(1)' : 'none', zIndex: 11 }} />
             </div>
 
             {/* Nodes */}
@@ -353,7 +353,7 @@ export default function Features() {
                 {/* Spinning dashed ring */}
                 <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.4)', animation: 'spin 30s linear infinite' }} />
                 {/* Official Isotipo */}
-                <img src="/levanna-logo-hub.png" alt="Levanna Hub" style={{ width: '160px', height: '160px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 15px rgba(255,255,255,0.4))' : 'none', zIndex: 11 }} />
+                <img src="/levanna-logo-hub.png" alt="Levanna Hub" style={{ width: '160px', height: '160px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 20px rgba(255,255,255,0.4)) brightness(0) invert(1)' : 'none', zIndex: 11 }} />
               </div>
 
               <div style={{ display: 'flex', gap: '1rem', overflowX: 'auto', padding: '0.5rem 1rem', width: '100%', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch' }}>
