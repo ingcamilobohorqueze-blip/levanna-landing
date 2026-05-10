@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Modal from './Modal';
 
 interface Product {
   title: string;
+  code: string;
   desc: string;
   image?: string;
-  icon?: string;
+  status: 'Operativa' | 'En Desarrollo';
+  demoUrl?: string;
 }
 
 
@@ -14,6 +17,7 @@ export default function Features() {
   const [activeApp, setActiveApp] = useState<number>(0);
   const [isMobile, setIsMobile] = useState<boolean>(false);
   const [isDark, setIsDark] = useState<boolean>(true);
+  const [showDemoModal, setShowDemoModal] = useState<boolean>(false);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -40,34 +44,53 @@ export default function Features() {
 
   const products: Product[] = [
     { 
-      title: 'Control de Acceso', 
+      title: 'Hub Central', 
+      code: 'LEV-WEB-HUB-SAAS',
+      status: 'Operativa',
+      desc: 'El centro neurálgico de tu operación. Una plataforma SaaS integral que conecta todos los módulos de Levanna, permitiendo una visión 360° de tus proyectos, gestión de usuarios y analítica en tiempo real.', 
+      image: '/levanna-logo-hub.png' 
+    },
+    { 
+      title: 'Control de Acceso Inteligente', 
+      code: 'LEV-SEC-ACC-QR',
+      status: 'Operativa',
       desc: 'El fin de la infraestructura costosa y las planillas de papel. Nuestra aplicación nativa transforma la gestión de personal en obra o en oficina sin requerir equipos físicos ni mantenimientos. Gestiona las horas laboradas de tu equipo con precisión y recibe alertas de seguridad automáticas.', 
       image: '/apps/control-acceso.png' 
     },
     { 
-      title: 'Caja Menor Nativa', 
+      title: 'Caja Menor WhatsApp + IA', 
+      code: 'LEV-OPS-BOT-TG',
+      status: 'Operativa',
       desc: 'Auditoría y control de gastos de campo, ahora en su propia App. Evolucionamos nuestra gestión financiera dejando atrás los reportes por WhatsApp. Con nuestra aplicación tienes el control absoluto: verifica registros, bloquea gastos no autorizados y mantén un historial inmutable.', 
       image: '/apps/caja-menor.png' 
     },
     { 
+      title: 'Bóveda Documental', 
+      code: 'LEV-DOC-VAU-SB',
+      status: 'Operativa',
+      desc: 'La única fuente de verdad. Unificación de esquemas de trabajo, planos, versiones, registro fotográfico y contratos en la nube con acceso en tiempo real. Adiós a la dispersión de información y los archivos perdidos en cadenas de correo.', 
+      image: '/apps/boveda.png' 
+    },
+    { 
       title: 'Asistente de Reuniones', 
+      code: 'LEV-MGT-AI-MEET',
+      status: 'Operativa',
       desc: 'Tu copiloto inteligente para comités y recorridos de obra. Nuestro asistente transcribe de forma inteligente tus juntas, identificando los puntos clave para delegar tareas automáticamente y rastrear su cumplimiento. Genera resúmenes ejecutivos precisos al instante.', 
       image: '/apps/asistente-reuniones.png' 
     },
     { 
-      title: 'Licitaciones 360', 
+      title: 'Asistente de Licitaciones', 
+      code: 'LEV-BIZ-AI-BID',
+      status: 'En Desarrollo',
       desc: 'Análisis automatizado de pliegos. Identificamos riesgos legales, evaluamos viabilidad y extraemos hitos críticos en segundos para que nunca pierdas una oportunidad. Centraliza todo el proceso de participación en un solo entorno colaborativo.', 
       image: '/apps/licitaciones.png' 
     },
     { 
       title: 'Control Presupuestal', 
+      code: 'LEV-FIN-CTL-BGT',
+      status: 'En Desarrollo',
       desc: 'Sistematización financiera enfocada en obra. Control cruzado entre presupuesto base vs. ejecutado y auditoría ágil de cortes de subcontratistas. Visualiza el estado real de tus finanzas con métricas actualizadas segundo a segundo.', 
       image: '/apps/control-presupuestal.png' 
-    },
-    { 
-      title: 'Bóveda Documental', 
-      desc: 'La única fuente de verdad. Unificación de esquemas de trabajo, planos, versiones, registro fotográfico y contratos en la nube con acceso en tiempo real. Adiós a la dispersión de información y los archivos perdidos en cadenas de correo.', 
-      image: '/apps/boveda.png' 
     }
   ];
 
@@ -175,8 +198,8 @@ export default function Features() {
                  </filter>
                </defs>
 
-               {products.map((_, i) => {
-                 const isActive = activeApp === i;
+               {products.slice(1).map((_, i) => {
+                 const isActive = activeApp === i + 1;
                  return (
                    <g key={`connection-${i}`}>
                      {/* Static faint line */}
@@ -200,29 +223,35 @@ export default function Features() {
             </svg>
 
             {/* Hub Central (Official Isotipo) */}
-            <div style={{
-               position: 'absolute',
-               left: `${centerPos.x}%`,
-               top: `${centerPos.y}%`,
-               transform: 'translate(-50%, -50%)',
-               width: '360px',
-               height: '360px',
-               borderRadius: '50%',
-               background: isDark ? 'radial-gradient(circle, rgba(17, 24, 39, 0.95) 0%, rgba(8, 12, 22, 1) 100%)' : '#ffffff',
-               border: '2px solid rgba(0, 229, 255, 0.6)',
-               boxShadow: isDark ? '0 0 120px rgba(0, 112, 243, 0.7), inset 0 0 50px rgba(0, 229, 255, 0.3)' : '0 0 50px rgba(0, 112, 243, 0.3)',
-               display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column',
-               zIndex: 10
-            }}>
-               {/* Spinning dashed ring */}
-               <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.4)', animation: 'spin 30s linear infinite' }} />
-               {/* Official Isotipo */}
-                <img src="/levanna-logo-hub.png" alt="Levanna Hub" style={{ width: '160px', height: '160px', objectFit: 'contain', filter: isDark ? 'drop-shadow(0 0 20px rgba(255,255,255,0.4)) brightness(0) invert(1)' : 'none', zIndex: 11 }} />
+            <div 
+              onClick={() => setActiveApp(0)}
+              style={{
+                position: 'absolute',
+                left: `${centerPos.x}%`,
+                top: `${centerPos.y}%`,
+                transform: 'translate(-50%, -50%)',
+                width: '360px',
+                height: '360px',
+                borderRadius: '50%',
+                background: isDark ? 'radial-gradient(circle, rgba(17, 24, 39, 0.95) 0%, rgba(8, 12, 22, 1) 100%)' : '#ffffff',
+                border: activeApp === 0 ? '3px solid #00E5FF' : '2px solid rgba(0, 229, 255, 0.6)',
+                boxShadow: activeApp === 0 
+                  ? '0 0 120px rgba(0, 112, 243, 0.9), inset 0 0 60px rgba(0, 229, 255, 0.5)' 
+                  : (isDark ? '0 0 120px rgba(0, 112, 243, 0.7), inset 0 0 50px rgba(0, 229, 255, 0.3)' : '0 0 50px rgba(0, 112, 243, 0.3)'),
+                display: 'flex', alignItems: 'center', justifyContent: 'center', flexDirection: 'column',
+                zIndex: 10,
+                cursor: 'pointer',
+                transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)'
+             }}>
+                {/* Spinning dashed ring */}
+                <div style={{ position: 'absolute', width: '100%', height: '100%', borderRadius: '50%', border: '2px dashed rgba(0, 229, 255, 0.4)', animation: 'spin 30s linear infinite' }} />
+                {/* Official Isotipo */}
+                 <img src="/levanna-logo-hub.png" alt="Levanna Hub" style={{ width: '160px', height: '160px', objectFit: 'contain', filter: (isDark || activeApp === 0) ? 'drop-shadow(0 0 20px rgba(255,255,255,0.4)) brightness(0) invert(1)' : 'none', zIndex: 11 }} />
             </div>
 
             {/* Nodes */}
-            {products.map((product, i) => {
-               const isActive = activeApp === i;
+            {products.slice(1).map((product, i) => {
+               const isActive = activeApp === i + 1;
                
                // Logic for Logos: Dark Mode -> Pure White. Light Mode -> Original colors.
                const logoFilter = isDark 
@@ -251,7 +280,7 @@ export default function Features() {
                      boxShadow: isActive ? '0 0 60px rgba(0, 229, 255, 0.8), inset 0 0 30px rgba(0, 229, 255, 0.4)' : (isDark ? '0 10px 25px rgba(0,0,0,0.4)' : '0 10px 20px rgba(0,0,0,0.05)'),
                    }}
                    whileHover={{ scale: 1.1, boxShadow: isActive ? '0 0 80px rgba(0, 229, 255, 0.9)' : (isDark ? '0 10px 30px rgba(0, 229, 255, 0.2)' : '0 10px 30px rgba(0,0,0,0.1)') }}
-                   onTap={() => setActiveApp(i)}
+                   onTap={() => setActiveApp(i + 1)}
                  >
                     {/* Ring decoration */}
                     {isActive && (
@@ -303,7 +332,7 @@ export default function Features() {
                        </div>
                        <div>
                          <h3 style={{ margin: 0, color: textColor, fontSize: '1.1rem', textTransform: 'uppercase', letterSpacing: '1px', textShadow: isDark ? '0 2px 4px rgba(0,0,0,0.5)' : 'none' }}>{products[activeApp].title}</h3>
-                         <span style={{ color: '#00E5FF', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '2px', opacity: 0.9 }}>SYSTEM ID: 0{activeApp + 1}</span>
+                         <span style={{ color: '#00E5FF', fontSize: '0.75rem', fontWeight: 600, letterSpacing: '2px', opacity: 0.9 }}>{products[activeApp].code}</span>
                        </div>
                     </div>
                     
@@ -314,17 +343,41 @@ export default function Features() {
                     </div>
 
                     {/* Status Footer */}
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}` }}>
-                       <div>
-                         <div style={{ fontSize: '0.7rem', color: isDark ? '#9CA3AF' : 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.4rem', fontWeight: 600 }}>Estado</div>
-                         <div style={{ color: '#10B981', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 500 }}>
-                           <span style={{ display: 'inline-block', width: '8px', height: '8px', background: '#10B981', borderRadius: '50%', boxShadow: '0 0 10px #10B981' }}></span> Operativo
-                         </div>
-                       </div>
-                       <button style={{ background: 'linear-gradient(90deg, var(--accent-blue) 0%, #00E5FF 100%)', color: 'white', border: 'none', padding: '0.7rem 1.5rem', borderRadius: '12px', fontSize: '0.9rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 15px rgba(0, 229, 255, 0.4)', transition: 'transform 0.2s' }} onMouseOver={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseOut={(e) => e.currentTarget.style.transform = 'scale(1)'}>
-                         Abrir Módulo
-                       </button>
-                    </div>
+                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem' }}>
+                        <div>
+                          <div style={{ fontSize: '0.7rem', color: isDark ? '#9CA3AF' : 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1.5px', marginBottom: '0.4rem', fontWeight: 600 }}>Estado</div>
+                          <div style={{ color: products[activeApp].status === 'Operativa' ? '#10B981' : '#F59E0B', fontSize: '0.9rem', display: 'flex', alignItems: 'center', gap: '0.5rem', fontWeight: 500 }}>
+                            <span style={{ 
+                              display: 'inline-block', 
+                              width: '8px', 
+                              height: '8px', 
+                              background: products[activeApp].status === 'Operativa' ? '#10B981' : '#F59E0B', 
+                              borderRadius: '50%', 
+                              boxShadow: `0 0 10px ${products[activeApp].status === 'Operativa' ? '#10B981' : '#F59E0B'}` 
+                            }}></span> {products[activeApp].status}
+                          </div>
+                        </div>
+                        <button 
+                          disabled={products[activeApp].status === 'En Desarrollo'}
+                          onClick={() => setShowDemoModal(true)}
+                          style={{ 
+                            background: products[activeApp].status === 'En Desarrollo' ? 'rgba(156, 163, 175, 0.2)' : 'linear-gradient(90deg, var(--accent-blue) 0%, #00E5FF 100%)', 
+                            color: products[activeApp].status === 'En Desarrollo' ? '#9CA3AF' : 'white', 
+                            border: 'none', 
+                            padding: '0.7rem 1.5rem', 
+                            borderRadius: '12px', 
+                            fontSize: '0.9rem', 
+                            fontWeight: 700, 
+                            cursor: products[activeApp].status === 'En Desarrollo' ? 'not-allowed' : 'pointer', 
+                            boxShadow: products[activeApp].status === 'En Desarrollo' ? 'none' : '0 4px 15px rgba(0, 229, 255, 0.4)', 
+                            transition: 'transform 0.2s' 
+                          }} 
+                          onMouseOver={(e) => { if (products[activeApp].status !== 'En Desarrollo') e.currentTarget.style.transform = 'scale(1.05)' }} 
+                          onMouseOut={(e) => { if (products[activeApp].status !== 'En Desarrollo') e.currentTarget.style.transform = 'scale(1)' }}
+                        >
+                          {products[activeApp].status === 'En Desarrollo' ? 'Próximamente' : 'Ver Demo'}
+                        </button>
+                     </div>
                  </motion.div>
                </AnimatePresence>
             </div>
@@ -404,7 +457,7 @@ export default function Features() {
                     </div>
                     <div>
                       <h3 style={{ fontSize: '1rem', color: textColor, margin: 0, textTransform: 'uppercase' }}>{products[activeApp].title}</h3>
-                      <span style={{ color: '#00E5FF', fontSize: '0.7rem' }}>SYSTEM ID: 0{activeApp + 1}</span>
+                      <span style={{ color: '#00E5FF', fontSize: '0.7rem' }}>{products[activeApp].code}</span>
                     </div>
                   </div>
                   <p style={{ lineHeight: '1.6', color: textSubColor, fontSize: '0.9rem', margin: '0 0 1.5rem 0' }}>
@@ -414,12 +467,33 @@ export default function Features() {
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: '1rem', borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}` }}>
                     <div>
                       <div style={{ fontSize: '0.65rem', color: isDark ? '#9CA3AF' : 'var(--text-secondary)', textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '0.2rem', fontWeight: 600 }}>Estado</div>
-                      <div style={{ color: '#10B981', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 500 }}>
-                        <span style={{ display: 'inline-block', width: '6px', height: '6px', background: '#10B981', borderRadius: '50%', boxShadow: '0 0 8px #10B981' }}></span> Operativo
+                      <div style={{ color: products[activeApp].status === 'Operativa' ? '#10B981' : '#F59E0B', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.4rem', fontWeight: 500 }}>
+                        <span style={{ 
+                          display: 'inline-block', 
+                          width: '6px', 
+                          height: '6px', 
+                          background: products[activeApp].status === 'Operativa' ? '#10B981' : '#F59E0B', 
+                          borderRadius: '50%', 
+                          boxShadow: `0 0 8px ${products[activeApp].status === 'Operativa' ? '#10B981' : '#F59E0B'}` 
+                        }}></span> {products[activeApp].status}
                       </div>
                     </div>
-                    <button style={{ background: 'linear-gradient(90deg, var(--accent-blue) 0%, #00E5FF 100%)', color: 'white', border: 'none', padding: '0.6rem 1.2rem', borderRadius: '10px', fontSize: '0.85rem', fontWeight: 700, cursor: 'pointer', boxShadow: '0 4px 12px rgba(0, 229, 255, 0.3)' }}>
-                      Abrir Módulo
+                    <button 
+                      disabled={products[activeApp].status === 'En Desarrollo'}
+                      onClick={() => setShowDemoModal(true)}
+                      style={{ 
+                        background: products[activeApp].status === 'En Desarrollo' ? 'rgba(156, 163, 175, 0.2)' : 'linear-gradient(90deg, var(--accent-blue) 0%, #00E5FF 100%)', 
+                        color: products[activeApp].status === 'En Desarrollo' ? '#9CA3AF' : 'white', 
+                        border: 'none', 
+                        padding: '0.6rem 1.2rem', 
+                        borderRadius: '10px', 
+                        fontSize: '0.85rem', 
+                        fontWeight: 700, 
+                        cursor: products[activeApp].status === 'En Desarrollo' ? 'not-allowed' : 'pointer', 
+                        boxShadow: products[activeApp].status === 'En Desarrollo' ? 'none' : '0 4px 12px rgba(0, 229, 255, 0.3)' 
+                      }}
+                    >
+                      {products[activeApp].status === 'En Desarrollo' ? 'Próximamente' : 'Ver Demo'}
                     </button>
                   </div>
                 </motion.div>
@@ -427,6 +501,31 @@ export default function Features() {
             </div>
           </div>
         )}
+
+        {/* Demo Modal */}
+        <Modal isOpen={showDemoModal} onClose={() => setShowDemoModal(false)}>
+          <div style={{ textAlign: 'center', padding: '2rem' }}>
+            <div style={{ width: '80px', height: '80px', borderRadius: '20px', background: 'rgba(0, 229, 255, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem auto' }}>
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </div>
+            <h2 style={{ color: textColor, marginBottom: '1rem' }}>Demo de {products[activeApp].title}</h2>
+            <p style={{ color: textSubColor, marginBottom: '2rem', lineHeight: '1.6' }}>
+              Estamos preparando el material audiovisual para esta aplicación. Muy pronto podrás ver un recorrido detallado de todas sus funcionalidades.
+            </p>
+            <div style={{ 
+              width: '100%', 
+              aspectRatio: '16/9', 
+              background: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.05)', 
+              borderRadius: '16px', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              border: `1px dashed ${cardBorder}`
+            }}>
+              <span style={{ color: isDark ? '#4B5563' : '#9CA3AF', fontWeight: 500 }}>Video en producción...</span>
+            </div>
+          </div>
+        </Modal>
     </section>
   );
 }
