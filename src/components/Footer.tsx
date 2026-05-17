@@ -48,7 +48,7 @@ export default function Footer() {
           <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.8' }}>
             <strong style={{ color: 'var(--text-primary)' }}>Miami, FL</strong><br/>
             7630NW 25 Street Ste 2B B065418<br/>
-            <a href="tel:+17727740605" style={{ color: 'var(--accent-blue)', textDecoration: 'none', fontWeight: 600, marginTop: '0.5rem', display: 'inline-block' }}>+1 772 774 0605</a>
+            <a href="tel:+17727740605" className="footer-phone-link" style={{ textDecoration: 'none', fontWeight: 600, marginTop: '0.5rem', display: 'inline-block' }}>+1 772 774 0605</a>
           </p>
         </div>
         
@@ -57,7 +57,7 @@ export default function Footer() {
           <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', lineHeight: '1.8' }}>
             <strong style={{ color: 'var(--text-primary)' }}>Bogotá, Colombia</strong><br/>
             Calle 159 # 54-78<br/>
-            <a href="tel:+573103311543" style={{ color: 'var(--accent-blue)', textDecoration: 'none', fontWeight: 600, marginTop: '0.5rem', display: 'inline-block' }}>+57 310 331 1543</a>
+            <a href="tel:+573103311543" className="footer-phone-link" style={{ textDecoration: 'none', fontWeight: 600, marginTop: '0.5rem', display: 'inline-block' }}>+57 310 331 1543</a>
           </p>
         </div>
       </div>

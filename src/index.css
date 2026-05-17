@@ -580,3 +580,18 @@ p {
     filter: invert(1) brightness(2); /* Invert to white for dark backgrounds */
   }
 }
+
+/* Footer Phone Number Contrast Fix */
+.footer-phone-link {
+  color: var(--accent-blue);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.footer-phone-link:hover {
+  opacity: 0.8;
+  transform: translateY(-1px);
+}
+@media (prefers-color-scheme: dark) {
+  .footer-phone-link {
+    color: #ffffff;
+  }
+}
