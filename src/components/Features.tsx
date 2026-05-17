@@ -48,7 +48,8 @@ export default function Features() {
       code: 'LEV-WEB-HUB-SAAS',
       status: 'Operativa',
       desc: 'El centro neurálgico de tu operación. Una plataforma SaaS integral que conecta todos los módulos de Levanna, permitiendo una visión 360° de tus proyectos, gestión de usuarios y analítica en tiempo real.', 
-      image: '/levanna-logo-hub.png' 
+      image: '/levanna-logo-hub.png',
+      demoUrl: 'https://www.youtube.com/embed/R1PCi1Tj_fA'
     },
     { 
       title: 'Control de Acceso Inteligente', 
@@ -505,25 +506,53 @@ export default function Features() {
         {/* Demo Modal */}
         <Modal isOpen={showDemoModal} onClose={() => setShowDemoModal(false)}>
           <div style={{ textAlign: 'center', padding: '2rem' }}>
-            <div style={{ width: '80px', height: '80px', borderRadius: '20px', background: 'rgba(0, 229, 255, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem auto' }}>
-              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-            </div>
-            <h2 style={{ color: textColor, marginBottom: '1rem' }}>Demo de {products[activeApp].title}</h2>
-            <p style={{ color: textSubColor, marginBottom: '2rem', lineHeight: '1.6' }}>
-              Estamos preparando el material audiovisual para esta aplicación. Muy pronto podrás ver un recorrido detallado de todas sus funcionalidades.
-            </p>
-            <div style={{ 
-              width: '100%', 
-              aspectRatio: '16/9', 
-              background: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.05)', 
-              borderRadius: '16px', 
-              display: 'flex', 
-              alignItems: 'center', 
-              justifyContent: 'center',
-              border: `1px dashed ${cardBorder}`
-            }}>
-              <span style={{ color: isDark ? '#4B5563' : '#9CA3AF', fontWeight: 500 }}>Video en producción...</span>
-            </div>
+            {!products[activeApp].demoUrl ? (
+              <>
+                <div style={{ width: '80px', height: '80px', borderRadius: '20px', background: 'rgba(0, 229, 255, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1.5rem auto' }}>
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#00E5FF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                </div>
+                <h2 style={{ color: textColor, marginBottom: '1rem' }}>Demo de {products[activeApp].title}</h2>
+                <p style={{ color: textSubColor, marginBottom: '2rem', lineHeight: '1.6' }}>
+                  Estamos preparando el material audiovisual para esta aplicación. Muy pronto podrás ver un recorrido detallado de todas sus funcionalidades.
+                </p>
+                <div style={{ 
+                  width: '100%', 
+                  aspectRatio: '16/9', 
+                  background: isDark ? 'rgba(0,0,0,0.3)' : 'rgba(0,0,0,0.05)', 
+                  borderRadius: '16px', 
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center',
+                  border: `1px dashed ${cardBorder}`
+                }}>
+                  <span style={{ color: isDark ? '#4B5563' : '#9CA3AF', fontWeight: 500 }}>Video en producción...</span>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 style={{ color: textColor, marginBottom: '1.5rem' }}>Demo de {products[activeApp].title}</h2>
+                <div style={{ 
+                  width: '100%', 
+                  aspectRatio: '16/9', 
+                  borderRadius: '16px', 
+                  overflow: 'hidden',
+                  boxShadow: isDark ? '0 10px 30px rgba(0,0,0,0.5)' : '0 10px 30px rgba(0,0,0,0.1)',
+                  border: `1px solid ${cardBorder}`
+                }}>
+                  <iframe 
+                    width="100%" 
+                    height="100%" 
+                    src={products[activeApp].demoUrl} 
+                    title={`Demo de ${products[activeApp].title}`} 
+                    frameBorder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    referrerPolicy="strict-origin-when-cross-origin" 
+                    allowFullScreen
+                    style={{ display: 'block' }}
+                  ></iframe>
+                </div>
+              </>
+            )}
           </div>
         </Modal>
     </section>
