@@ -63,7 +63,8 @@ export default function Features() {
       code: 'LEV-OPS-BOT-TG',
       status: 'Operativa',
       desc: 'Auditoría y control de gastos de campo, ahora en su propia App. Evolucionamos nuestra gestión financiera dejando atrás los reportes por WhatsApp. Con nuestra aplicación tienes el control absoluto: verifica registros, bloquea gastos no autorizados y mantén un historial inmutable.', 
-      image: '/apps/caja-menor.png' 
+      image: '/apps/caja-menor.png',
+      demoUrl: 'https://www.youtube.com/embed/5LXf4Xbt7_g'
     },
     { 
       title: 'Bóveda Documental', 
@@ -107,7 +108,9 @@ export default function Features() {
   const centerPos = { x: 45, y: 48 };
 
   // Dynamic positioning for the HUD Card to avoid blocking nodes
-  const activeNodeIsRight = nodePositions[activeApp].isRightSide;
+  const activeNodeIsRight = activeApp > 0 
+    ? (nodePositions[activeApp - 1]?.isRightSide ?? false)
+    : false;
   const cardPositionStyle = activeNodeIsRight 
     ? { left: '5%', bottom: '5%' } 
     : { right: '3%', bottom: '5%' };
