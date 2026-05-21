@@ -1,11 +1,42 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import Modal from './Modal';
+
+interface Message {
+  id: number;
+  sender: 'client' | 'bot';
+  text: string;
+  time: string;
+}
 
 export default function AccelerationSolutions() {
   const [isDark, setIsDark] = useState<boolean>(true);
   const [activeCard, setActiveCard] = useState<number | null>(null);
 
-  // Generate stable random properties for particles once
+  // Modal open states
+  const [isCalculatorOpen, setIsCalculatorOpen] = useState<boolean>(false);
+  const [isWhatsAppOpen, setIsWhatsAppOpen] = useState<boolean>(false);
+  const [isTallyOpen, setIsTallyOpen] = useState<boolean>(false);
+
+  // Modal 1: Calculator State
+  const [contacts, setContacts] = useState<number>(350);
+  const [lostPercent, setLostPercent] = useState<number>(40);
+  const [avgTicket, setAvgTicket] = useState<number>(800);
+
+  // Modal 2: WhatsApp State
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: 1,
+      sender: 'bot',
+      text: '¡Hola! Bienvenido al asistente virtual inteligente de Levanna. Soy el bot de demostración de Aceleración Digital. ¿Qué te gustaría probar hoy?',
+      time: '12:00'
+    }
+  ]);
+  const [isBotTyping, setIsBotTyping] = useState<boolean>(false);
+  const [customInput, setCustomInput] = useState<string>('');
+  const chatEndRef = useRef<HTMLDivElement>(null);
+
+  // Stable random particles properties generated once
   const [particles] = useState(() => 
     [...Array(18)].map((_, i) => ({
       id: i,
@@ -36,6 +67,30 @@ export default function AccelerationSolutions() {
     }
   }, []);
 
+  // Dynamically load Tally embed script
+  useEffect(() => {
+    if (!document.querySelector('script[src="https://tally.so/widgets/embed.js"]')) {
+      const script = document.createElement('script');
+      script.src = "https://tally.so/widgets/embed.js";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  // Trigger Tally parser on modal open
+  useEffect(() => {
+    if (isTallyOpen && typeof window !== 'undefined' && (window as any).Tally) {
+      setTimeout(() => {
+        (window as any).Tally.loadEmbeds();
+      }, 50);
+    }
+  }, [isTallyOpen]);
+
+  // Scroll chat simulator to bottom
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isBotTyping]);
+
   // Theme-based colors to match Ecosistema section exactly
   const bgColor = isDark ? '#080C16' : 'var(--bg-primary)';
   const radialGradient = isDark 
@@ -65,6 +120,87 @@ export default function AccelerationSolutions() {
       y: 0,
       transition: { type: "spring" as const, stiffness: 100, damping: 15 }
     }
+  };
+
+  // Modal 1: Calculator Math
+  const lostContacts = Math.round(contacts * (lostPercent / 100));
+  const monthlyLeakage = Math.round(lostContacts * avgTicket);
+  const potentialSavingsMonthly = Math.round(monthlyLeakage * 0.3); // Recover 30%
+  const potentialSavingsAnnual = potentialSavingsMonthly * 12;
+
+  // Modal 2: WhatsApp Predefined Interactions
+  const handleWhatsAppSelection = (optionText: string, botReplyText: string) => {
+    if (isBotTyping) return;
+
+    // 1. Add user message
+    const userMsg: Message = {
+      id: Date.now(),
+      sender: 'client',
+      text: optionText,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+    setMessages(prev => [...prev, userMsg]);
+
+    // 2. Trigger typing state
+    setIsBotTyping(true);
+
+    // 3. Trigger bot message after a delay
+    setTimeout(() => {
+      setIsBotTyping(false);
+      const botMsg: Message = {
+        id: Date.now() + 1,
+        sender: 'bot',
+        text: botReplyText,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, botMsg]);
+    }, 1200);
+  };
+
+  const handleCustomMessageSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customInput.trim() || isBotTyping) return;
+
+    const userText = customInput.trim();
+    setCustomInput('');
+
+    // 1. Add user message
+    const userMsg: Message = {
+      id: Date.now(),
+      sender: 'client',
+      text: userText,
+      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    };
+    setMessages(prev => [...prev, userMsg]);
+
+    // 2. Trigger typing state
+    setIsBotTyping(true);
+
+    // 3. Match keywords for a response
+    let botResponse = "Excelente pregunta. Como parte de nuestras soluciones de Aceleración Digital, nos aseguramos de conectar de forma segura tus flujos de trabajo con bases de datos en la nube. ¿Te gustaría agendar un diagnóstico técnico gratuito haciendo clic en 'Consultar sobre mi proyecto' para analizar tu caso?";
+    
+    const normalizedText = userText.toLowerCase();
+    if (normalizedText.includes('precio') || normalizedText.includes('costo') || normalizedText.includes('tarifa') || normalizedText.includes('cuanto vale') || normalizedText.includes('cuánto vale') || normalizedText.includes('cobran')) {
+      botResponse = "Nuestras soluciones son a la medida de tu operación para garantizar el máximo retorno de inversión. Te sugiero completar nuestro diagnóstico rápido haciendo clic en 'Consultar sobre mi proyecto' para darte una cotización exacta.";
+    } else if (normalizedText.includes('hola') || normalizedText.includes('buenas') || normalizedText.includes('saludos') || normalizedText.includes('buenos dias') || normalizedText.includes('buenos días')) {
+      botResponse = "¡Hola! Qué gusto saludarte. Soy el asistente de Aceleración Digital de Levanna. ¿En qué puedo ayudarte hoy? Puedes preguntarme sobre automatizaciones, bases de datos o integraciones.";
+    } else if (normalizedText.includes('integracion') || normalizedText.includes('integración') || normalizedText.includes('crm') || normalizedText.includes('api') || normalizedText.includes('database') || normalizedText.includes('sheets') || normalizedText.includes('postgres') || normalizedText.includes('sql') || normalizedText.includes('excel')) {
+      botResponse = "Soportamos integraciones nativas con PostgreSQL, SQL Server, Google Sheets, HubSpot, Salesforce y cualquier software contable o ERP vía API REST o Webhooks en tiempo real.";
+    } else if (normalizedText.includes('contacto') || normalizedText.includes('telefono') || normalizedText.includes('teléfono') || normalizedText.includes('hablar con persona') || normalizedText.includes('asesor')) {
+      botResponse = "¡Claro que sí! Puedes comunicarte con un asesor de inmediato haciendo clic en 'Consultar sobre mi proyecto' o a través de nuestro botón de WhatsApp principal. ¡Estamos listos para impulsar tu negocio!";
+    }
+
+    // 4. Trigger bot message after a delay
+    setTimeout(() => {
+      setIsBotTyping(false);
+      const botMsg: Message = {
+        id: Date.now() + 1,
+        sender: 'bot',
+        text: botResponse,
+        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+      setMessages(prev => [...prev, botMsg]);
+    }, 1200);
   };
 
   return (
@@ -152,6 +288,7 @@ export default function AccelerationSolutions() {
             variants={cardVariants}
             onHoverStart={() => setActiveCard(1)}
             onHoverEnd={() => setActiveCard(null)}
+            onClick={() => setIsCalculatorOpen(true)}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
             style={{
               gridColumn: 'span 12',
@@ -168,8 +305,6 @@ export default function AccelerationSolutions() {
               position: 'relative',
               boxShadow: isDark ? '0 15px 35px rgba(0,0,0,0.4)' : '0 10px 30px rgba(0,0,0,0.03)',
               cursor: 'pointer',
-              // Desktop: span 7
-              // Tablet/Mobile: handled via inline styles below or standard grid wrapping
             }}
             className="bento-card-7"
           >
@@ -295,7 +430,6 @@ export default function AccelerationSolutions() {
                         </linearGradient>
                       </defs>
                     </svg>
-
                     <div style={{ width: '100%', height: '100%' }}></div>
                   </div>
                 </div>
@@ -349,6 +483,10 @@ export default function AccelerationSolutions() {
               >
                 <button 
                   className="btn-primary"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsCalculatorOpen(true);
+                  }}
                   style={{ 
                     width: '100%', 
                     padding: '0.75rem 1.5rem', 
@@ -395,6 +533,7 @@ export default function AccelerationSolutions() {
             variants={cardVariants}
             onHoverStart={() => setActiveCard(2)}
             onHoverEnd={() => setActiveCard(null)}
+            onClick={() => setIsWhatsAppOpen(true)}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
             style={{
               gridColumn: 'span 12',
@@ -411,8 +550,6 @@ export default function AccelerationSolutions() {
               position: 'relative',
               boxShadow: isDark ? '0 15px 35px rgba(0,0,0,0.4)' : '0 10px 30px rgba(0,0,0,0.03)',
               cursor: 'pointer',
-              // Desktop: span 5
-              // Tablet/Mobile: handled via inline styles below or standard grid wrapping
             }}
             className="bento-card-5"
           >
@@ -534,31 +671,6 @@ export default function AccelerationSolutions() {
                       ¡Hola! Sí, confirmamos stock disponible. ¿Qué cantidad necesitas reservar?
                     </p>
                   </motion.div>
-
-                  {/* Bubble 3 (Typing Simulation / Response) */}
-                  <AnimatePresence>
-                    {activeCard === 2 && (
-                      <motion.div 
-                        initial={{ opacity: 0, y: 5 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ delay: 1.2 }}
-                        style={{
-                          alignSelf: 'flex-start',
-                          background: isDark ? '#1f2c34' : 'white',
-                          borderRadius: '8px',
-                          borderTopLeftRadius: '0px',
-                          padding: '5px 8px',
-                          maxWidth: '85%',
-                          boxShadow: '0 1px 2px rgba(0,0,0,0.1)'
-                        }}
-                      >
-                        <p style={{ fontSize: '7px', margin: 0, color: isDark ? '#e9edef' : '#111b21', lineHeight: 1.3, fontWeight: 600 }}>
-                          📝 15 unidades de LEV-WEB
-                        </p>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
                 </div>
               </div>
             </div>
@@ -577,6 +689,10 @@ export default function AccelerationSolutions() {
               >
                 <button 
                   className="btn-primary"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setIsWhatsAppOpen(true);
+                  }}
                   style={{ 
                     width: '100%', 
                     padding: '0.75rem 1.5rem', 
@@ -623,6 +739,7 @@ export default function AccelerationSolutions() {
             variants={cardVariants}
             onHoverStart={() => setActiveCard(3)}
             onHoverEnd={() => setActiveCard(null)}
+            onClick={() => setIsTallyOpen(true)}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
             style={{
               gridColumn: 'span 12',
@@ -639,7 +756,6 @@ export default function AccelerationSolutions() {
               position: 'relative',
               boxShadow: isDark ? '0 15px 35px rgba(0,0,0,0.4)' : '0 10px 30px rgba(0,0,0,0.03)',
               cursor: 'pointer',
-              // Desktop: span 12 (wide bottom row)
             }}
           >
             <div style={{ display: 'flex', flexDirection: 'row', flexWrap: 'wrap', gap: '2rem', justifyContent: 'space-between', alignItems: 'flex-start', position: 'relative', zIndex: 5 }}>
@@ -679,6 +795,10 @@ export default function AccelerationSolutions() {
                 >
                   <button 
                     className="btn-primary"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setIsTallyOpen(true);
+                    }}
                     style={{ 
                       width: '100%', 
                       padding: '0.75rem 1.5rem', 
@@ -805,7 +925,7 @@ export default function AccelerationSolutions() {
                     </>
                   )}
                 </svg>
-                {/* Central F2 Hub Node */}
+                {/* Central F2 Hub Node (Strictly Anchored to Center) */}
                 <div style={{
                   position: 'absolute',
                   width: '44px',
@@ -818,7 +938,10 @@ export default function AccelerationSolutions() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   transition: 'all 0.3s ease',
-                  zIndex: 3
+                  zIndex: 3,
+                  left: '50%',
+                  top: '50%',
+                  transform: 'translate(-50%, -50%)'
                 }}>
                   <span style={{ fontSize: '9px', fontWeight: 800, color: isDark ? '#00E5FF' : accentColor }}>F2</span>
                 </div>
@@ -877,7 +1000,442 @@ export default function AccelerationSolutions() {
         </motion.div>
       </div>
 
-      {/* Global CSS styles injected for custom breakpoints and styles */}
+      {/* -------------------- MODALES INTERACTIVOS -------------------- */}
+
+      {/* Modal 1: Calculador de Oportunidad Comercial */}
+      <Modal isOpen={isCalculatorOpen} onClose={() => setIsCalculatorOpen(false)}>
+        <div style={{ color: textColor }}>
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <div style={{ 
+              width: '54px', 
+              height: '54px', 
+              borderRadius: '16px', 
+              background: isDark ? 'rgba(0, 229, 255, 0.1)' : 'rgba(26, 34, 51, 0.05)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              margin: '0 auto 1rem auto',
+              color: isDark ? '#00E5FF' : accentColor
+            }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="4" y="2" width="16" height="20" rx="2" ry="2"/><line x1="9" y1="22" x2="9" y2="16"/><line x1="8" y1="6" x2="16" y2="6"/><line x1="16" y1="16" x2="16" y2="22"/><line x1="12" y1="16" x2="12" y2="22"/></svg>
+            </div>
+            <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '0.5rem' }}>Calculadora de Oportunidad Comercial</h2>
+            <p style={{ color: textSubColor, fontSize: '1rem', maxWidth: '600px', margin: '0 auto' }}>
+              Evalúa el impacto financiero de las oportunidades y contactos perdidos en tu operación.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem', marginTop: '1rem' }}>
+            {/* Left Column: Sliders */}
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
+              <h3 style={{ fontSize: '1.25rem', borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`, paddingBottom: '0.5rem' }}>Parámetros Mensuales</h3>
+              
+              {/* Slider 1: Contacts */}
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontWeight: 600 }}>
+                  <span>Contactos Recibidos</span>
+                  <span style={{ color: '#00E5FF' }}>{contacts} leads</span>
+                </div>
+                <input 
+                  type="range" 
+                  min="50" 
+                  max="2000" 
+                  step="50"
+                  value={contacts} 
+                  onChange={(e) => setContacts(parseInt(e.target.value))}
+                  style={{ width: '100%', accentColor: '#00E5FF', cursor: 'pointer' }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#6B7280', marginTop: '4px' }}>
+                  <span>50</span>
+                  <span>2000</span>
+                </div>
+              </div>
+
+              {/* Slider 2: Lost % */}
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontWeight: 600 }}>
+                  <span>Porcentaje que estimas perder</span>
+                  <span style={{ color: '#EF4444' }}>{lostPercent}%</span>
+                </div>
+                <input 
+                  type="range" 
+                  min="10" 
+                  max="90" 
+                  step="5"
+                  value={lostPercent} 
+                  onChange={(e) => setLostPercent(parseInt(e.target.value))}
+                  style={{ width: '100%', accentColor: '#EF4444', cursor: 'pointer' }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#6B7280', marginTop: '4px' }}>
+                  <span>10%</span>
+                  <span>90%</span>
+                </div>
+              </div>
+
+              {/* Slider 3: Average Ticket */}
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontWeight: 600 }}>
+                  <span>Valor de venta promedio</span>
+                  <span style={{ color: '#10B981' }}>${avgTicket} USD</span>
+                </div>
+                <input 
+                  type="range" 
+                  min="100" 
+                  max="5000" 
+                  step="100"
+                  value={avgTicket} 
+                  onChange={(e) => setAvgTicket(parseInt(e.target.value))}
+                  style={{ width: '100%', accentColor: '#10B981', cursor: 'pointer' }}
+                />
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#6B7280', marginTop: '4px' }}>
+                  <span>$100</span>
+                  <span>$5000</span>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Dashboard Calculations */}
+            <div style={{ 
+              background: isDark ? 'rgba(0,0,0,0.2)' : 'rgba(26, 34, 51, 0.03)', 
+              borderRadius: '20px', 
+              padding: '1.5rem', 
+              border: `1px solid ${isDark ? 'rgba(255,255,255,0.06)' : 'rgba(26,34,51,0.06)'}`,
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'space-between',
+              gap: '1.5rem'
+            }}>
+              <div>
+                <h3 style={{ fontSize: '1.25rem', borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`, paddingBottom: '0.5rem', marginBottom: '1.25rem' }}>Análisis de Impacto</h3>
+                
+                {/* Metric 1: Lost contacts count */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                  <span style={{ fontSize: '0.9rem', color: textSubColor }}>Leads perdidos al mes:</span>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#EF4444' }}>{lostContacts} leads</span>
+                </div>
+
+                {/* Metric 2: Monthly leakage */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                  <span style={{ fontSize: '0.9rem', color: textSubColor }}>Fuga económica mensual:</span>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#EF4444' }}>${monthlyLeakage.toLocaleString()} USD</span>
+                </div>
+
+                <div style={{ margin: '1.5rem 0', height: '1px', background: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }}></div>
+
+                {/* Highlight metric: Potential annual savings with 30% recovery */}
+                <div style={{ 
+                  background: isDark ? 'rgba(16, 185, 129, 0.08)' : 'rgba(16, 185, 129, 0.04)', 
+                  border: '1px solid rgba(16, 185, 129, 0.25)', 
+                  borderRadius: '16px',
+                  padding: '1.2rem',
+                  textAlign: 'center'
+                }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#10B981', display: 'block', marginBottom: '4px' }}>
+                    Ahorro potencial con Levanna (recuperando solo 30%)
+                  </span>
+                  <span style={{ fontSize: '2rem', fontWeight: 800, color: '#10B981', textShadow: '0 0 10px rgba(16, 185, 129, 0.2)' }}>
+                    +${potentialSavingsAnnual.toLocaleString()} USD /año
+                  </span>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                <button 
+                  onClick={() => {
+                    setIsCalculatorOpen(false);
+                    setIsTallyOpen(true);
+                  }}
+                  className="btn-primary" 
+                  style={{ width: '100%', justifyContent: 'center' }}
+                >
+                  Recuperar estos ingresos
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+                <button 
+                  onClick={() => setIsCalculatorOpen(false)}
+                  className="btn-secondary" 
+                  style={{ width: '100%', padding: '0.8rem 1.5rem', fontSize: '0.95rem' }}
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Modal 2: Simulador de WhatsApp */}
+      <Modal isOpen={isWhatsAppOpen} onClose={() => setIsWhatsAppOpen(false)}>
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%', maxHeight: '650px', color: textColor }}>
+          <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.25rem' }}>Simulador de WhatsApp Levanna</h2>
+            <p style={{ color: textSubColor, fontSize: '0.9rem' }}>
+              Experimenta de primera mano cómo responde nuestro bot inteligente en tiempo real.
+            </p>
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem', alignItems: 'stretch' }}>
+            {/* Left: Mobile phone mockup */}
+            <div style={{ 
+              background: isDark ? '#0b141a' : '#efeae2', 
+              borderRadius: '24px', 
+              border: `4px solid ${isDark ? '#1f2c34' : '#075e54'}`,
+              overflow: 'hidden', 
+              height: '420px',
+              display: 'flex',
+              flexDirection: 'column',
+              boxShadow: '0 15px 35px rgba(0,0,0,0.3)',
+              position: 'relative'
+            }}>
+              {/* WhatsApp phone Header */}
+              <div style={{ 
+                height: '48px', 
+                background: isDark ? '#1f2c34' : '#075e54', 
+                display: 'flex', 
+                alignItems: 'center', 
+                padding: '0 12px',
+                justifyContent: 'space-between',
+                color: 'white',
+                borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'transparent'}`
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <div style={{ width: '28px', height: '28px', borderRadius: '50%', background: '#128C7E', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="white"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946C.06 5.348 5.397.01 12.008.01c3.202.001 6.212 1.249 8.477 3.517 2.266 2.268 3.507 5.28 3.505 8.484-.004 6.657-5.34 11.997-11.953 11.997-2.005-.001-3.973-.502-5.731-1.456L0 24zm6.59-4.846c1.6.95 3.188 1.449 4.825 1.451 5.436 0 9.86-4.37 9.864-9.799.002-2.63-1.023-5.101-2.885-6.968C16.63 1.97 14.17 .947 11.993.947 6.559.947 2.134 5.32 2.13 10.748c-.001 1.71.463 3.38 1.343 4.878l-.997 3.642 3.73-.974h.023z"/></svg>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '11px', fontWeight: 700 }}>Asistente Levanna</div>
+                    <span style={{ fontSize: '8px', color: isBotTyping ? '#25D366' : '#8696a0', display: 'flex', alignItems: 'center', gap: '3px' }}>
+                      <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: isBotTyping ? '#25D366' : '#8696a0', display: 'inline-block' }}></span>
+                      {isBotTyping ? 'Escribiendo...' : 'En línea'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Chat Feed */}
+              <div style={{ padding: '12px', flex: 1, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                {messages.map((msg) => (
+                  <motion.div
+                    key={msg.id}
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    style={{
+                      alignSelf: msg.sender === 'client' ? 'flex-end' : 'flex-start',
+                      background: msg.sender === 'client' ? (isDark ? '#005c4b' : '#d9fdd3') : (isDark ? '#1f2c34' : 'white'),
+                      borderRadius: '10px',
+                      borderTopRightRadius: msg.sender === 'client' ? '0px' : '10px',
+                      borderTopLeftRadius: msg.sender === 'client' ? '10px' : '0px',
+                      padding: '8px 12px',
+                      maxWidth: '85%',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                      position: 'relative'
+                    }}
+                  >
+                    <p style={{ fontSize: '9px', margin: 0, color: isDark ? '#e9edef' : '#111b21', lineHeight: 1.35 }}>
+                      {msg.text}
+                    </p>
+                    <span style={{ fontSize: '6px', color: isDark ? '#8696a0' : '#667781', display: 'block', textAlign: 'right', marginTop: '3px' }}>
+                      {msg.time}
+                    </span>
+                  </motion.div>
+                ))}
+
+                {/* Typing Indicator */}
+                {isBotTyping && (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    style={{
+                      alignSelf: 'flex-start',
+                      background: isDark ? '#1f2c34' : 'white',
+                      borderRadius: '10px',
+                      borderTopLeftRadius: '0px',
+                      padding: '8px 12px',
+                      maxWidth: '50px',
+                      boxShadow: '0 1px 3px rgba(0,0,0,0.15)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '3px'
+                    }}
+                  >
+                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#8696a0', animation: 'blink 1.4s infinite both' }}></span>
+                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#8696a0', animation: 'blink 1.4s infinite both 0.2s' }}></span>
+                    <span style={{ width: '4px', height: '4px', borderRadius: '50%', background: '#8696a0', animation: 'blink 1.4s infinite both 0.4s' }}></span>
+                  </motion.div>
+                )}
+
+                <div ref={chatEndRef} />
+              </div>
+
+              {/* Chat Input Bar */}
+              <form 
+                onSubmit={handleCustomMessageSubmit}
+                style={{
+                  padding: '8px',
+                  background: isDark ? '#1f2c34' : '#f0f2f5',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  borderTop: `1px solid ${isDark ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.05)'}`
+                }}
+              >
+                <input 
+                  type="text" 
+                  value={customInput}
+                  onChange={(e) => setCustomInput(e.target.value)}
+                  placeholder="Escribe un mensaje..."
+                  disabled={isBotTyping}
+                  style={{
+                    flex: 1,
+                    background: isDark ? '#2a3942' : 'white',
+                    border: 'none',
+                    borderRadius: '18px',
+                    padding: '6px 12px',
+                    fontSize: '10px',
+                    color: isDark ? '#e9edef' : '#111b21',
+                    outline: 'none',
+                  }}
+                />
+                <button
+                  type="submit"
+                  disabled={isBotTyping || !customInput.trim()}
+                  style={{
+                    width: '28px',
+                    height: '28px',
+                    borderRadius: '50%',
+                    background: '#00a884',
+                    border: 'none',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: 'white',
+                    cursor: isBotTyping || !customInput.trim() ? 'not-allowed' : 'pointer',
+                    opacity: isBotTyping || !customInput.trim() ? 0.6 : 1,
+                    transition: 'all 0.2s'
+                  }}
+                >
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
+              </form>
+            </div>
+
+            {/* Right: Quick replies triggers */}
+            <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: '1.25rem' }}>
+              <div>
+                <h3 style={{ fontSize: '1.1rem', fontWeight: 700, marginBottom: '0.8rem', borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`, paddingBottom: '4px' }}>
+                  Selecciona una consulta de prueba:
+                </h3>
+                
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '0.8rem' }}>
+                  {[
+                    {
+                      q: "💼 ¿Cómo ayudas a empresas del sector construcción/industrial?",
+                      a: "Automatizamos todo el flujo operativo en obra: desde el registro biométrico y por código QR del personal sin planillas de papel, hasta el control de gastos de campo por WhatsApp integrado con IA. Toda tu operación se sincroniza en vivo con tu Hub Central."
+                    },
+                    {
+                      q: "🤖 Simula el registro automático de una compra",
+                      a: "¡Pedido iniciado! Nuestro bot procesa la imagen de la factura que envíes, extrae los ítems comprados mediante IA, los compara con tu presupuesto base de obra y, si está autorizado, sincroniza el gasto directamente en PostgreSQL."
+                    },
+                    {
+                      q: "⚡ ¿Qué integraciones y base de datos soportas?",
+                      a: "Soportamos bases de datos PostgreSQL, SQL Server, MySQL y Google Sheets. Nos integramos con tus sistemas ERPs a través de Webhooks dinámicos y APIs REST completas con encriptación SSL de nivel financiero."
+                    }
+                  ].map((option, idx) => (
+                    <button
+                      key={idx}
+                      disabled={isBotTyping}
+                      onClick={() => handleWhatsAppSelection(option.q, option.a)}
+                      style={{
+                        background: isDark ? 'rgba(26, 34, 51, 0.4)' : 'white',
+                        border: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`,
+                        borderRadius: '12px',
+                        padding: '10px 14px',
+                        textAlign: 'left',
+                        color: textColor,
+                        fontSize: '0.8rem',
+                        lineHeight: 1.4,
+                        cursor: isBotTyping ? 'not-allowed' : 'pointer',
+                        transition: 'all 0.2s',
+                        boxShadow: 'var(--shadow-soft)'
+                      }}
+                      onMouseOver={(e) => { if (!isBotTyping) e.currentTarget.style.borderColor = '#00E5FF' }}
+                      onMouseOut={(e) => { if (!isBotTyping) e.currentTarget.style.borderColor = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' }}
+                    >
+                      {option.q}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
+                <button 
+                  onClick={() => {
+                    setIsWhatsAppOpen(false);
+                    setIsTallyOpen(true);
+                  }}
+                  className="btn-primary" 
+                  style={{ width: '100%', justifyContent: 'center', fontSize: '0.9rem', padding: '0.7rem 1.5rem' }}
+                >
+                  Consultar sobre mi proyecto
+                </button>
+                <button 
+                  onClick={() => setIsWhatsAppOpen(false)}
+                  className="btn-secondary" 
+                  style={{ width: '100%', padding: '0.7rem 1.5rem', fontSize: '0.9rem' }}
+                >
+                  Cerrar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Modal 3: Embed de Tally (Diagnóstico Técnico) */}
+      <Modal isOpen={isTallyOpen} onClose={() => setIsTallyOpen(false)}>
+        <div style={{ color: textColor }}>
+          <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
+            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.25rem' }}>Diagnóstico de Operación</h2>
+            <p style={{ color: textSubColor, fontSize: '0.9rem', marginBottom: '1.5rem' }}>
+              Evalúa tus flujos de trabajo con bases de datos reales. Completa el diagnóstico en 3 minutos.
+            </p>
+          </div>
+
+          <div style={{ 
+            width: '100%', 
+            borderRadius: '20px', 
+            overflow: 'hidden', 
+            background: isDark ? 'rgba(8, 12, 22, 0.6)' : 'white',
+            border: `2px solid ${isDark ? 'rgba(26, 34, 51, 0.8)' : 'rgba(26, 34, 51, 0.15)'}`,
+            boxShadow: '0 8px 32px rgba(26, 34, 51, 0.08), inset 0 2px 8px rgba(0,0,0,0.2)'
+          }}>
+            <iframe 
+              data-tally-src="https://tally.so/embed/ob7111?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+              loading="lazy" 
+              width="100%" 
+              height="480" 
+              frameBorder={0} 
+              marginHeight={0} 
+              marginWidth={0} 
+              title="Diagnóstico Técnico Aceleración" 
+              style={{ border: 'none', display: 'block' }}
+            ></iframe>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1.5rem' }}>
+            <button 
+              onClick={() => setIsTallyOpen(false)}
+              className="btn-secondary" 
+              style={{ padding: '0.7rem 1.5rem', fontSize: '0.9rem' }}
+            >
+              Cerrar Diagnóstico
+            </button>
+          </div>
+        </div>
+      </Modal>
+
+      {/* Global CSS styles injected for custom animations and responsive design */}
       <style>{`
         /* Desktop: Bento Layout distribution */
         @media (min-width: 1024px) {
@@ -903,6 +1461,13 @@ export default function AccelerationSolutions() {
         #aceleracion-digital .bento-card-5:hover {
           border-color: ${isDark ? 'rgba(0, 229, 255, 0.3)' : 'rgba(26, 34, 51, 0.15)'} !important;
           box-shadow: ${isDark ? '0 20px 40px rgba(0, 229, 255, 0.12), 0 0 30px rgba(0,0,0,0.5)' : '0 15px 35px rgba(26, 34, 51, 0.08)'} !important;
+        }
+
+        /* WhatsApp Chat typing animation */
+        @keyframes blink {
+          0% { opacity: .2; }
+          20% { opacity: 1; }
+          100% { opacity: .2; }
         }
       `}</style>
     </section>
