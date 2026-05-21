@@ -48,6 +48,7 @@ export default function Header() {
             </Link>
           )}
           <a href="#soluciones-ia" onClick={(e) => handleNavClick(e, 'soluciones-ia')} className="nav-link">Soluciones IA</a>
+          <a href="#aceleracion-digital" onClick={(e) => handleNavClick(e, 'aceleracion-digital')} className="nav-link">Aceleración</a>
           <a href="#consultoria" onClick={(e) => handleNavClick(e, 'consultoria')} className="nav-link">Consultoría</a>
           <a href="#contacto" onClick={(e) => handleNavClick(e, 'contacto')} className="nav-link">Contáctanos</a>
 
