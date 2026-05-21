@@ -9,6 +9,57 @@ interface Message {
   time: string;
 }
 
+type Currency = 'COP' | 'USD' | 'EUR';
+
+const CONVERSION_FACTORS: Record<Currency, number> = {
+  COP: 0.00025, // 1 COP = 0.00025 USD
+  USD: 1.0,     // Base
+  EUR: 1.08,    // 1 EUR = 1.08 USD
+};
+
+interface SliderConfig {
+  min: number;
+  max: number;
+  step: number;
+  defaultVal: number;
+}
+
+const TICKET_SLIDER_CONFIGS: Record<Currency, SliderConfig> = {
+  COP: {
+    min: 400000,
+    max: 20000000,
+    step: 100000,
+    defaultVal: 3200000
+  },
+  USD: {
+    min: 100,
+    max: 5000,
+    step: 100,
+    defaultVal: 800
+  },
+  EUR: {
+    min: 100,
+    max: 5000,
+    step: 100,
+    defaultVal: 750
+  }
+};
+
+const convertCurrency = (val: number, fromCur: Currency, toCur: Currency): number => {
+  if (fromCur === toCur) return val;
+  return val * (CONVERSION_FACTORS[fromCur] / CONVERSION_FACTORS[toCur]);
+};
+
+const formatCurrency = (val: number, cur: Currency) => {
+  if (cur === 'COP') {
+    return `$${Math.round(val).toLocaleString('es-CO')} COP`;
+  } else if (cur === 'USD') {
+    return `$${Math.round(val).toLocaleString('en-US')} USD`;
+  } else {
+    return `€${Math.round(val).toLocaleString('de-DE')} EUR`;
+  }
+};
+
 export default function AccelerationSolutions() {
   const [isDark, setIsDark] = useState<boolean>(true);
   const [activeCard, setActiveCard] = useState<number | null>(null);
@@ -19,9 +70,24 @@ export default function AccelerationSolutions() {
   const [isTallyOpen, setIsTallyOpen] = useState<boolean>(false);
 
   // Modal 1: Calculator State
+  const [currency, setCurrency] = useState<Currency>('COP');
   const [contacts, setContacts] = useState<number>(350);
   const [lostPercent, setLostPercent] = useState<number>(40);
-  const [avgTicket, setAvgTicket] = useState<number>(800);
+  const [avgTicket, setAvgTicket] = useState<number>(3200000); // 3200000 COP by default (equivalent to 800 USD)
+
+  const handleCurrencyChange = (newCur: Currency) => {
+    const converted = convertCurrency(avgTicket, currency, newCur);
+    const config = TICKET_SLIDER_CONFIGS[newCur];
+    
+    // Round to nearest step of the new currency config
+    let rounded = Math.round(converted / config.step) * config.step;
+    
+    // Clamp within min and max boundaries
+    rounded = Math.max(config.min, Math.min(config.max, rounded));
+    
+    setAvgTicket(rounded);
+    setCurrency(newCur);
+  };
 
   // Modal 2: WhatsApp State
   const [messages, setMessages] = useState<Message[]>([
@@ -1028,7 +1094,53 @@ export default function AccelerationSolutions() {
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2.5rem', marginTop: '1rem' }}>
             {/* Left Column: Sliders */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
-              <h3 style={{ fontSize: '1.25rem', borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`, paddingBottom: '0.5rem' }}>Parámetros Mensuales</h3>
+              <div style={{ 
+                display: 'flex', 
+                justifyContent: 'space-between', 
+                alignItems: 'center', 
+                borderBottom: `1px solid ${isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)'}`, 
+                paddingBottom: '0.5rem' 
+              }}>
+                <h3 style={{ fontSize: '1.25rem', margin: 0 }}>Parámetros Mensuales</h3>
+                
+                {/* Currency Selector Pill */}
+                <div style={{
+                  display: 'flex',
+                  background: isDark ? 'rgba(255, 255, 255, 0.04)' : 'rgba(26, 34, 51, 0.04)',
+                  borderRadius: '10px',
+                  padding: '3px',
+                  border: `1px solid ${isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(26, 34, 51, 0.08)'}`
+                }}>
+                  {(['COP', 'USD', 'EUR'] as Currency[]).map((cur) => {
+                    const isSelected = currency === cur;
+                    return (
+                      <button
+                        key={cur}
+                        type="button"
+                        onClick={() => handleCurrencyChange(cur)}
+                        style={{
+                          background: isSelected 
+                            ? (isDark ? 'rgba(0, 229, 255, 0.15)' : '#1A2233') 
+                            : 'transparent',
+                          color: isSelected 
+                            ? (isDark ? '#00E5FF' : 'white') 
+                            : (isDark ? '#9CA3AF' : '#4B5563'),
+                          border: 'none',
+                          borderRadius: '7px',
+                          padding: '4px 10px',
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          cursor: 'pointer',
+                          transition: 'all 0.2s ease',
+                          outline: 'none'
+                        }}
+                      >
+                        {cur}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
               
               {/* Slider 1: Contacts */}
               <div>
@@ -1076,20 +1188,20 @@ export default function AccelerationSolutions() {
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem', fontWeight: 600 }}>
                   <span>Valor de venta promedio</span>
-                  <span style={{ color: '#10B981' }}>${avgTicket} USD</span>
+                  <span style={{ color: '#10B981', fontWeight: 700 }}>{formatCurrency(avgTicket, currency)}</span>
                 </div>
                 <input 
                   type="range" 
-                  min="100" 
-                  max="5000" 
-                  step="100"
+                  min={TICKET_SLIDER_CONFIGS[currency].min} 
+                  max={TICKET_SLIDER_CONFIGS[currency].max} 
+                  step={TICKET_SLIDER_CONFIGS[currency].step}
                   value={avgTicket} 
                   onChange={(e) => setAvgTicket(parseInt(e.target.value))}
                   style={{ width: '100%', accentColor: '#10B981', cursor: 'pointer' }}
                 />
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '10px', color: '#6B7280', marginTop: '4px' }}>
-                  <span>$100</span>
-                  <span>$5000</span>
+                  <span>{formatCurrency(TICKET_SLIDER_CONFIGS[currency].min, currency)}</span>
+                  <span>{formatCurrency(TICKET_SLIDER_CONFIGS[currency].max, currency)}</span>
                 </div>
               </div>
             </div>
@@ -1117,7 +1229,7 @@ export default function AccelerationSolutions() {
                 {/* Metric 2: Monthly leakage */}
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                   <span style={{ fontSize: '0.9rem', color: textSubColor }}>Fuga económica mensual:</span>
-                  <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#EF4444' }}>${monthlyLeakage.toLocaleString()} USD</span>
+                  <span style={{ fontSize: '1.1rem', fontWeight: 700, color: '#EF4444' }}>{formatCurrency(monthlyLeakage, currency)}</span>
                 </div>
 
                 <div style={{ margin: '1.5rem 0', height: '1px', background: isDark ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.1)' }}></div>
@@ -1133,8 +1245,8 @@ export default function AccelerationSolutions() {
                   <span style={{ fontSize: '0.75rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '1px', color: '#10B981', display: 'block', marginBottom: '4px' }}>
                     Ahorro potencial con Levanna (recuperando solo 30%)
                   </span>
-                  <span style={{ fontSize: '2rem', fontWeight: 800, color: '#10B981', textShadow: '0 0 10px rgba(16, 185, 129, 0.2)' }}>
-                    +${potentialSavingsAnnual.toLocaleString()} USD /año
+                  <span style={{ fontSize: '1.8rem', fontWeight: 800, color: '#10B981', textShadow: '0 0 10px rgba(16, 185, 129, 0.2)' }}>
+                    +{formatCurrency(potentialSavingsAnnual, currency)} /año
                   </span>
                 </div>
               </div>
