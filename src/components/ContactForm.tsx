@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import Modal from './Modal';
 
 type FormData = {
   nombre: string;
@@ -12,12 +12,26 @@ type FormData = {
 };
 
 export default function ContactForm() {
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>();
+  const { register, handleSubmit, reset, formState: { errors } } = useForm<FormData>({
+    defaultValues: {
+      nombre: '',
+      empresa: '',
+      correo: '',
+      presupuesto: '',
+      mensaje: '',
+      terms_accepted: false
+    }
+  });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  const [isPolicyOpen, setIsPolicyOpen] = useState(false);
 
   const onSubmit = async (data: FormData) => {
+    if (!data.terms_accepted) {
+      setErrorMsg('Debes aceptar la Política de Tratamiento de Datos para continuar.');
+      return;
+    }
     setIsSubmitting(true);
     setErrorMsg('');
     setSuccess(false);
@@ -127,15 +141,15 @@ export default function ContactForm() {
             <span className="custom-checkbox"></span>
             <span>
               He leído y acepto la{' '}
-              <Link 
-                to="/privacidad" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                style={{ color: 'var(--text-primary)', textDecoration: 'underline', fontWeight: 500 }}
-                onClick={(e) => e.stopPropagation()}
+              <span 
+                style={{ color: 'var(--text-primary)', textDecoration: 'underline', fontWeight: 500, cursor: 'pointer' }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsPolicyOpen(true);
+                }}
               >
                 Política de Tratamiento de Datos
-              </Link>
+              </span>
             </span>
           </label>
           {errors.terms_accepted && <span style={{ color: '#EF4444', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>Debes aceptar la política de tratamiento de datos para continuar.</span>}
@@ -160,6 +174,64 @@ export default function ContactForm() {
           )}
         </button>
       </form>
+
+      {/* Modal de Política de Tratamiento de Datos integrado */}
+      <Modal isOpen={isPolicyOpen} onClose={() => setIsPolicyOpen(false)}>
+        <div style={{ color: 'var(--text-primary)', fontFamily: 'var(--font-main)', display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+          <div style={{ borderBottom: '1px solid var(--panel-border)', paddingBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <div style={{ 
+              width: '36px', 
+              height: '36px', 
+              borderRadius: '8px', 
+              background: 'rgba(26, 34, 51, 0.05)', 
+              display: 'flex', 
+              alignItems: 'center', 
+              justifyContent: 'center',
+              color: 'var(--accent-blue)'
+            }}>
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0 }}>Política de Tratamiento de Datos</h3>
+          </div>
+          
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--text-secondary)' }}>
+            <p>
+              <strong>Levanna Digital Control</strong>, identificada bajo el sitio web <a href="https://www.levannadc.com" target="_blank" rel="noopener noreferrer" style={{ color: 'var(--text-primary)', textDecoration: 'underline', fontWeight: 600 }}>www.levannadc.com</a>, garantiza la protección de los derechos al Habeas Data, la intimidad y el buen nombre en cumplimiento con la <strong>Ley Estatutaria 1581 de 2012</strong> (Colombia) y normativas internacionales de protección de datos.
+            </p>
+            
+            <div>
+              <strong style={{ color: 'var(--text-primary)', display: 'block', marginBottom: '0.25rem' }}>1. Finalidad de la Recolección:</strong>
+              <p>Los datos que suministras en este formulario serán tratados exclusivamente con las siguientes finalidades:</p>
+              <ul style={{ paddingLeft: '1.25rem', marginTop: '0.25rem', listStyleType: 'disc' }}>
+                <li>Responder y gestionar eficientemente tus consultas, cotizaciones o requerimientos de proyectos.</li>
+                <li>Establecer contacto comercial y técnico para optimizar y acelerar tus flujos de trabajo operativos.</li>
+                <li>Garantizar el soporte adecuado de nuestras soluciones tecnológicas.</li>
+              </ul>
+            </div>
+            
+            <div>
+              <strong style={{ color: 'var(--text-primary)', display: 'block', marginBottom: '0.25rem' }}>2. Derechos del Titular:</strong>
+              <p>Tienes el derecho constitucional a conocer, actualizar, rectificar y suprimir tu información en cualquier momento, así como a revocar la autorización otorgada para su tratamiento.</p>
+            </div>
+            
+            <div>
+              <strong style={{ color: 'var(--text-primary)', display: 'block', marginBottom: '0.25rem' }}>3. Canales de Atención:</strong>
+              <p>Para el ejercicio de tus derechos, puedes radicar tu solicitud directamente a través del correo electrónico: <a href="mailto:info@levannadc.com" style={{ color: 'var(--text-primary)', textDecoration: 'underline', fontWeight: 600 }}>info@levannadc.com</a>, la cual será atendida en los plazos legales vigentes.</p>
+            </div>
+          </div>
+          
+          <div style={{ display: 'flex', justifyContent: 'flex-end', borderTop: '1px solid var(--panel-border)', paddingTop: '1.25rem', marginTop: '0.5rem' }}>
+            <button 
+              type="button" 
+              onClick={() => setIsPolicyOpen(false)}
+              className="btn-primary" 
+              style={{ padding: '0.7rem 2rem', fontSize: '0.95rem' }}
+            >
+              Entendido
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }
