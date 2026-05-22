@@ -595,3 +595,75 @@ p {
     color: #ffffff;
   }
 }
+
+/* Custom minimalist checkbox */
+.checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin: 0.5rem 0;
+  transition: color 0.2s ease;
+}
+
+.custom-checkbox {
+  position: relative;
+  width: 18px;
+  height: 18px;
+  border: 2px solid var(--panel-border);
+  border-radius: 4px;
+  background-color: var(--bg-primary);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Hidden real input */
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* Hover styles */
+.checkbox-container:hover .custom-checkbox {
+  border-color: var(--accent-purple);
+}
+
+/* Checked state */
+.checkbox-container input:checked ~ .custom-checkbox {
+  background: var(--accent-gradient);
+  border-color: transparent;
+}
+
+/* Checkmark SVG or CSS symbol */
+.custom-checkbox::after {
+  content: "";
+  position: absolute;
+  display: none;
+  width: 4px;
+  height: 8px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+  top: 2px;
+}
+
+.checkbox-container input:checked ~ .custom-checkbox::after {
+  display: block;
+}
+
+/* If error, highlight in red */
+.checkbox-error .custom-checkbox {
+  border-color: #EF4444 !important;
+  box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
+}
+

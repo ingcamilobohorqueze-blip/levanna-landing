@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
 
 type FormData = {
   nombre: string;
@@ -7,6 +8,7 @@ type FormData = {
   correo: string;
   presupuesto: string;
   mensaje: string;
+  terms_accepted: boolean;
 };
 
 export default function ContactForm() {
@@ -114,6 +116,29 @@ export default function ContactForm() {
             style={{ width: '100%', padding: '0.875rem 1rem', borderRadius: '8px', border: '1px solid var(--panel-border)', background: 'var(--bg-primary)', color: 'var(--text-primary)', resize: 'vertical' }}
           ></textarea>
           {errors.mensaje && <span style={{ color: '#EF4444', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>Requerido</span>}
+        </div>
+
+        <div>
+          <label className={`checkbox-container ${errors.terms_accepted ? 'checkbox-error' : ''}`}>
+            <input 
+              type="checkbox" 
+              {...register('terms_accepted', { required: true })} 
+            />
+            <span className="custom-checkbox"></span>
+            <span>
+              He leído y acepto la{' '}
+              <Link 
+                to="/privacidad" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                style={{ color: 'var(--text-primary)', textDecoration: 'underline', fontWeight: 500 }}
+                onClick={(e) => e.stopPropagation()}
+              >
+                Política de Tratamiento de Datos
+              </Link>
+            </span>
+          </label>
+          {errors.terms_accepted && <span style={{ color: '#EF4444', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>Debes aceptar la política de tratamiento de datos para continuar.</span>}
         </div>
 
         <button 
