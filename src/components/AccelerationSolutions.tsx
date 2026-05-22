@@ -1523,15 +1523,15 @@ export default function AccelerationSolutions() {
             boxShadow: '0 8px 32px rgba(26, 34, 51, 0.08), inset 0 2px 8px rgba(0,0,0,0.2)'
           }}>
             <iframe 
-              data-tally-src="https://tally.so/embed/ob7111?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" 
+              src="https://tally.so/embed/ob7111?alignLeft=1&hideTitle=1&transparentBackground=1" 
               loading="lazy" 
               width="100%" 
-              height="850" 
+              height="1000" 
               frameBorder={0} 
               marginHeight={0} 
               marginWidth={0} 
               title="Diagnóstico Técnico Aceleración" 
-              style={{ border: 'none', display: 'block' }}
+              style={{ border: 'none', display: 'block', width: '100%', minHeight: '1000px' }}
             ></iframe>
           </div>
 

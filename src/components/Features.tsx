@@ -78,7 +78,8 @@ export default function Features() {
       code: 'LEV-MGT-AI-MEET',
       status: 'Operativa',
       desc: 'Tu copiloto inteligente para comités y recorridos de obra. Nuestro asistente transcribe de forma inteligente tus juntas, identificando los puntos clave para delegar tareas automáticamente y rastrear su cumplimiento. Genera resúmenes ejecutivos precisos al instante.', 
-      image: '/apps/asistente-reuniones.png' 
+      image: '/apps/asistente-reuniones.png',
+      demoUrl: 'https://www.youtube.com/embed/P04NZYsW8Y0' 
     },
     { 
       title: 'Asistente de Licitaciones', 

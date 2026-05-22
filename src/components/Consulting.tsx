@@ -47,7 +47,7 @@ export default function Consulting() {
         </div>
 
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <iframe data-tally-src="https://tally.so/embed/ob7111?alignLeft=1&hideTitle=1&transparentBackground=1&dynamicHeight=1" loading="lazy" width="100%" height="850" frameBorder={0} marginHeight={0} marginWidth={0} title="Diagnóstico Técnico" style={{ border: 'none', display: 'block' }}></iframe>
+          <iframe src="https://tally.so/embed/ob7111?alignLeft=1&hideTitle=1&transparentBackground=1" loading="lazy" width="100%" height="1000" frameBorder={0} marginHeight={0} marginWidth={0} title="Diagnóstico Técnico" style={{ border: 'none', display: 'block', width: '100%', minHeight: '1000px' }}></iframe>
         </Modal>
       </div>
     </section>
