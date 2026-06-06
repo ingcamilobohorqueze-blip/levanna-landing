@@ -56,7 +56,8 @@ export default function Features() {
       code: 'LEV-SEC-ACC-QR',
       status: 'Operativa',
       desc: 'El fin de la infraestructura costosa y las planillas de papel. Nuestra aplicación nativa transforma la gestión de personal en obra o en oficina sin requerir equipos físicos ni mantenimientos. Gestiona las horas laboradas de tu equipo con precisión y recibe alertas de seguridad automáticas.', 
-      image: '/apps/control-acceso.png' 
+      image: '/apps/control-acceso.png',
+      demoUrl: 'https://www.youtube.com/embed/0SQowfSg0Cs'
     },
     { 
       title: 'Caja Menor WhatsApp + IA', 
