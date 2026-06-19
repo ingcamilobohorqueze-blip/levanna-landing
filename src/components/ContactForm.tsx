@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import Modal from './Modal';
+import { supabase } from '../lib/supabase';
 
 type FormData = {
   nombre: string;
   empresa: string;
   correo: string;
+  telefono?: string;
   presupuesto: string;
   mensaje: string;
   terms_accepted: boolean;
@@ -37,16 +39,20 @@ export default function ContactForm() {
     setSuccess(false);
 
     try {
-      const response = await fetch('https://cbohorquez1983.app.n8n.cloud/form-test/f7576e09-5bfc-4661-8f7a-49c4a2b0afd9', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
+      const { error: supabaseError } = await supabase.rpc('upsert_lead', {
+        p_nombre: data.nombre,
+        p_telefono: data.telefono || "",
+        p_correo: data.correo,
+        p_empresa: data.empresa || "",
+        p_origen: "Web_Curioso",
+        p_dolor: "Presupuesto: " + data.presupuesto + " - Mensaje: " + data.mensaje
       });
 
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
+      if (supabaseError) {
+        console.error('Error inyectando el lead:', supabaseError);
+        throw new Error('Supabase error');
+      } else {
+        console.log('Lead inyectado con éxito y asignado automáticamente.');
       }
 
       setSuccess(true);
