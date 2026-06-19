@@ -115,6 +115,23 @@ export default function ContactForm() {
         </div>
 
         <div>
+          <input 
+            type="tel" 
+            placeholder="Teléfono (ej. +573103311543)" 
+            {...register('telefono', { 
+              required: 'Requerido',
+              pattern: {
+                value: /^\+[0-9]{1,4}[0-9]{10}$/,
+                message: 'Debe incluir código de país (ej. +57) y 10 dígitos'
+              }
+            })}
+            className="form-input"
+            style={{ width: '100%', padding: '0.875rem 1rem', borderRadius: '8px', border: '1px solid var(--panel-border)', background: 'var(--bg-primary)', color: 'var(--text-primary)' }}
+          />
+          {errors.telefono && <span style={{ color: '#EF4444', fontSize: '0.8rem', marginTop: '0.25rem', display: 'block' }}>{(errors.telefono as any).message || 'Requerido'}</span>}
+        </div>
+
+        <div>
           <select 
             {...register('presupuesto')}
             className="form-select"
