@@ -45,7 +45,8 @@ export default function ContactForm() {
         p_correo: data.correo,
         p_empresa: data.empresa || "",
         p_origen: "Web_Curioso",
-        p_dolor: "Presupuesto: " + data.presupuesto + " - Mensaje: " + data.mensaje
+        p_dolor: "Presupuesto: " + data.presupuesto + " - Mensaje: " + data.mensaje,
+        p_terminos_aceptados: data.terms_accepted
       });
 
       if (supabaseError) {
