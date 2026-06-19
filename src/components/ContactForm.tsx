@@ -117,7 +117,7 @@ export default function ContactForm() {
         <div>
           <input 
             type="tel" 
-            placeholder="Teléfono (ej. +573103311543)" 
+            placeholder="Teléfono (ej. +573102345678)" 
             {...register('telefono', { 
               required: 'Requerido',
               pattern: {
