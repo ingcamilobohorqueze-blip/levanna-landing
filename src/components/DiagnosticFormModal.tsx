@@ -89,7 +89,7 @@ export default function DiagnosticFormModal({ isOpen, onClose }: DiagnosticFormM
 
   return (
     <Modal isOpen={isOpen} onClose={() => { if (!isSubmitting) onClose(); }}>
-      <div style={{ color: 'var(--text-primary)', maxHeight: '85vh', overflowY: 'auto', paddingRight: '10px' }}>
+      <div style={{ color: 'var(--text-primary)' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
           <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem' }}>Diagnóstico Consultivo</h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
