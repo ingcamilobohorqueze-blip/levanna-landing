@@ -71,7 +71,7 @@ export default function QuickLeadModal({ isOpen, onClose, productName }: QuickLe
     <Modal isOpen={isOpen} onClose={onClose}>
       <div style={{ color: 'var(--text-primary)' }}>
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem' }}>Solicitar Acceso Urgente</h2>
+          <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.5rem' }}>Conectar con Especialista</h2>
           <p style={{ color: 'var(--text-secondary)', fontSize: '0.95rem' }}>
             Estás a un paso de acelerar tu operación con: <strong style={{ color: 'var(--accent-blue)' }}>{productName}</strong>
           </p>
