@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Modal from './Modal';
+import QuickLeadModal from './QuickLeadModal';
 
 interface Message {
   id: number;
@@ -67,7 +68,7 @@ export default function AccelerationSolutions() {
   // Modal open states
   const [isCalculatorOpen, setIsCalculatorOpen] = useState<boolean>(false);
   const [isWhatsAppOpen, setIsWhatsAppOpen] = useState<boolean>(false);
-  const [isTallyOpen, setIsTallyOpen] = useState<boolean>(false);
+  const [leadFormProduct, setLeadFormProduct] = useState<string | null>(null);
 
   // Modal 1: Calculator State
   const [currency, setCurrency] = useState<Currency>('COP');
@@ -132,25 +133,6 @@ export default function AccelerationSolutions() {
       return () => darkModeMediaQuery.removeListener(themeChangeHandler);
     }
   }, []);
-
-  // Dynamically load Tally embed script
-  useEffect(() => {
-    if (!document.querySelector('script[src="https://tally.so/widgets/embed.js"]')) {
-      const script = document.createElement('script');
-      script.src = "https://tally.so/widgets/embed.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
-
-  // Trigger Tally parser on modal open
-  useEffect(() => {
-    if (isTallyOpen && typeof window !== 'undefined' && (window as any).Tally) {
-      setTimeout(() => {
-        (window as any).Tally.loadEmbeds();
-      }, 50);
-    }
-  }, [isTallyOpen]);
 
   // Scroll chat simulator to bottom
   useEffect(() => {
@@ -805,7 +787,7 @@ export default function AccelerationSolutions() {
             variants={cardVariants}
             onHoverStart={() => setActiveCard(3)}
             onHoverEnd={() => setActiveCard(null)}
-            onClick={() => setIsTallyOpen(true)}
+            onClick={() => setLeadFormProduct('Automatizaciones y Sincronización Total')}
             whileHover={{ y: -8, transition: { duration: 0.3 } }}
             style={{
               gridColumn: 'span 12',
@@ -863,7 +845,7 @@ export default function AccelerationSolutions() {
                     className="btn-primary"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setIsTallyOpen(true);
+                      setLeadFormProduct('Automatizaciones y Sincronización Total');
                     }}
                     style={{ 
                       width: '100%', 
@@ -1255,7 +1237,7 @@ export default function AccelerationSolutions() {
                 <button 
                   onClick={() => {
                     setIsCalculatorOpen(false);
-                    setIsTallyOpen(true);
+                    setLeadFormProduct('Landing Pages de Alta Conversión');
                   }}
                   className="btn-primary" 
                   style={{ width: '100%', justifyContent: 'center' }}
@@ -1484,7 +1466,7 @@ export default function AccelerationSolutions() {
                 <button 
                   onClick={() => {
                     setIsWhatsAppOpen(false);
-                    setIsTallyOpen(true);
+                    setLeadFormProduct('Asistente WhatsApp con IA');
                   }}
                   className="btn-primary" 
                   style={{ width: '100%', justifyContent: 'center', fontSize: '0.9rem', padding: '0.7rem 1.5rem' }}
@@ -1504,48 +1486,12 @@ export default function AccelerationSolutions() {
         </div>
       </Modal>
 
-      {/* Modal 3: Embed de Tally (Diagnóstico Técnico) */}
-      <Modal isOpen={isTallyOpen} onClose={() => setIsTallyOpen(false)}>
-        <div style={{ color: textColor }}>
-          <div style={{ textAlign: 'center', marginBottom: '1rem' }}>
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, marginBottom: '0.25rem' }}>Diagnóstico de Operación</h2>
-            <p style={{ color: textSubColor, fontSize: '0.9rem', marginBottom: '1.5rem' }}>
-              Evalúa tus flujos de trabajo con bases de datos reales. Completa el diagnóstico en 3 minutos.
-            </p>
-          </div>
-
-          <div style={{ 
-            width: '100%', 
-            borderRadius: '20px', 
-            overflow: 'hidden', 
-            background: isDark ? 'rgba(8, 12, 22, 0.6)' : 'white',
-            border: `2px solid ${isDark ? 'rgba(26, 34, 51, 0.8)' : 'rgba(26, 34, 51, 0.15)'}`,
-            boxShadow: '0 8px 32px rgba(26, 34, 51, 0.08), inset 0 2px 8px rgba(0,0,0,0.2)'
-          }}>
-            <iframe 
-              src="https://tally.so/embed/ob7111?alignLeft=1&hideTitle=1&transparentBackground=1" 
-              loading="lazy" 
-              width="100%" 
-              height="1000" 
-              frameBorder={0} 
-              marginHeight={0} 
-              marginWidth={0} 
-              title="Diagnóstico Técnico Aceleración" 
-              style={{ border: 'none', display: 'block', width: '100%', minHeight: '1000px' }}
-            ></iframe>
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'flex-end', marginTop: '1.5rem' }}>
-            <button 
-              onClick={() => setIsTallyOpen(false)}
-              className="btn-secondary" 
-              style={{ padding: '0.7rem 1.5rem', fontSize: '0.9rem' }}
-            >
-              Cerrar Diagnóstico
-            </button>
-          </div>
-        </div>
-      </Modal>
+      {/* Native Lead Modal to replace Tally */}
+      <QuickLeadModal 
+        isOpen={!!leadFormProduct} 
+        onClose={() => setLeadFormProduct(null)} 
+        productName={leadFormProduct || ''} 
+      />
 
       {/* Global CSS styles injected for custom animations and responsive design */}
       <style>{`
