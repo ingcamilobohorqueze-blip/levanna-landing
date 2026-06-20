@@ -1,27 +1,9 @@
-import { useEffect, useState } from 'react';
-import Modal from './Modal';
+import { useState } from 'react';
+import DiagnosticFormModal from './DiagnosticFormModal';
 
 export default function Consulting() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  useEffect(() => {
-    // Load Tally embed script for dynamic height
-    if (!document.querySelector('script[src="https://tally.so/widgets/embed.js"]')) {
-      const script = document.createElement('script');
-      script.src = "https://tally.so/widgets/embed.js";
-      script.async = true;
-      document.body.appendChild(script);
-    }
-  }, []);
-
-  useEffect(() => {
-    // Force Tally to re-parse the DOM for widgets once the modal is injected
-    if (isModalOpen && typeof window !== 'undefined' && (window as any).Tally) {
-      setTimeout(() => {
-        (window as any).Tally.loadEmbeds();
-      }, 50); // slight delay to ensure DOM is ready
-    }
-  }, [isModalOpen]);
   return (
     <section id="consultoria" className="section container" style={{ position: 'relative', marginTop: '4rem', marginBottom: '4rem' }}>
       <div className="card-panel animate-slide-up" style={{ textAlign: 'center', padding: '4rem 2rem', border: '1px solid var(--accent-blue)' }}>
@@ -46,9 +28,7 @@ export default function Consulting() {
           </span>
         </div>
 
-        <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
-          <iframe src="https://tally.so/embed/ob7111?alignLeft=1&hideTitle=1&transparentBackground=1" loading="lazy" width="100%" height="1000" frameBorder={0} marginHeight={0} marginWidth={0} title="Diagnóstico Técnico" style={{ border: 'none', display: 'block', width: '100%', minHeight: '1000px' }}></iframe>
-        </Modal>
+        <DiagnosticFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
       </div>
     </section>
   );
