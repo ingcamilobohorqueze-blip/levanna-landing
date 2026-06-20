@@ -25,6 +25,7 @@ export default function Consulting() {
           </button>
           <span style={{ fontSize: '0.85rem', color: '#6B7280', opacity: 0.8, fontWeight: 400 }}>
             Diagnóstico gratuito en solo 5 minutos.
+          </span>
         </div>
       </div>
       <DiagnosticFormModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
