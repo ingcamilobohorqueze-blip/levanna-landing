@@ -135,44 +135,15 @@ export default function Features() {
   const cardBorder = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.05)';
 
   return (
-    <section id="soluciones-ia" style={{ position: 'relative', width: '100%', minHeight: isMobile ? 'auto' : '900px', background: bgColor, overflow: 'hidden', padding: isMobile ? '4rem 1rem' : '0', transition: 'background 0.3s ease' }}>
+    <section id="soluciones-ia" className="unified-bg-section" style={{ position: 'relative', width: '100%', minHeight: isMobile ? 'auto' : '900px', background: bgColor, overflow: 'hidden', padding: isMobile ? '4rem 1rem' : '0', transition: 'background 0.3s ease' }}>
        
        {/* Background Deep Space & Rings */}
-       <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: radialGradient, pointerEvents: 'none' }} />
+       <div className="section-bg-overlay" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: radialGradient, pointerEvents: 'none' }} />
        
        {/* Giant Orbital Rings */}
        <div style={{ position: 'absolute', top: '48%', left: '45%', transform: 'translate(-50%, -50%)', width: '900px', height: '900px', borderRadius: '50%', border: `1px solid ${ringColor1}`, pointerEvents: 'none' }} />
        <div style={{ position: 'absolute', top: '48%', left: '45%', transform: 'translate(-50%, -50%)', width: '700px', height: '700px', borderRadius: '50%', border: `1px solid ${ringColor2}`, boxShadow: isDark ? 'inset 0 0 80px rgba(0,112,243,0.03)' : 'none', pointerEvents: 'none' }} />
        <div style={{ position: 'absolute', top: '48%', left: '45%', transform: 'translate(-50%, -50%)', width: '450px', height: '450px', borderRadius: '50%', border: `1px dashed ${ringColor3}`, pointerEvents: 'none' }} />
-
-       {/* Floating Particles ('Luciérnagas') */}
-       {!isMobile && [...Array(25)].map((_, i) => (
-         <motion.div
-           key={`particle-${i}`}
-           style={{
-             position: 'absolute',
-             width: Math.random() * 4 + 2 + 'px', // Increased size
-             height: Math.random() * 4 + 2 + 'px',
-             background: isDark ? 'rgba(255, 255, 255, 0.9)' : '#1A2233', // Theme logic
-             borderRadius: '50%',
-             left: Math.random() * 100 + '%',
-             top: Math.random() * 100 + '%',
-             boxShadow: isDark ? '0 0 15px rgba(255, 255, 255, 0.8), 0 0 5px #00E5FF' : 'none', // Glow in dark mode
-             pointerEvents: 'none',
-             zIndex: 1
-           }}
-           animate={{
-             y: [0, Math.random() * -60 - 20, 0],
-             x: [0, Math.random() * 40 - 20, 0],
-             opacity: isDark ? [0.2, 1, 0.2] : [0.1, 0.5, 0.1], // Increased opacity
-           }}
-           transition={{
-             duration: Math.random() * 5 + 4,
-             repeat: Infinity,
-             ease: "easeInOut"
-           }}
-         />
-       ))}
 
        {/* Interactive Layer */}
        {!isMobile ? (

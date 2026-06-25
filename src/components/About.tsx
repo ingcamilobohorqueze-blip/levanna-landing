@@ -21,7 +21,7 @@ export default function About() {
               </div>
               <div style={{ background: 'var(--bg-secondary)', padding: '1.5rem', borderRadius: '16px', border: '1px solid var(--panel-border)' }}>
                 <h4 style={{ color: 'var(--text-primary)', marginBottom: '0.5rem', fontSize: '1.1rem' }}>Nuestra Visión</h4>
-                <p style={{ fontSize: '0.95rem', margin: 0, color: 'var(--text-secondary)' }}>Ser referentes en transformación digital para construcción en LATAM.</p>
+                <p style={{ fontSize: '0.95rem', margin: 0, color: 'var(--text-secondary)' }}>Ser referentes en transformación digital para la industria y la construcción en LATAM.</p>
               </div>
             </div>
           </div>

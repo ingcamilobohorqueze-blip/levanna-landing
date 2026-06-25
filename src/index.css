@@ -320,15 +320,15 @@ p {
 .bg-dynamic-logo {
   width: 100%;
   height: auto;
-  opacity: 0.03; /* Very subtle */
-  filter: grayscale(100%) brightness(200%);
+  opacity: 0.10; /* Increased from 0.03 to be more visible */
+  filter: grayscale(100%) brightness(150%);
   animation: dynamicLight 8s infinite alternate ease-in-out;
 }
 
 @media (prefers-color-scheme: dark) {
   .bg-dynamic-logo {
-    opacity: 0.05;
-    filter: drop-shadow(0 0 20px rgba(107, 114, 128, 0.2));
+    opacity: 0.18; /* Increased from 0.05 to stand out */
+    filter: drop-shadow(0 0 20px rgba(107, 114, 128, 0.25)) brightness(1.2);
   }
 }
 
@@ -666,4 +666,55 @@ p {
   border-color: #EF4444 !important;
   box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.1);
 }
+
+/* ==========================================================================
+   UNIFIED VANTA.JS NET BACKGROUND STYLES
+   ========================================================================== */
+
+/* Active when showing the dynamic unified Vanta background */
+body.unified-bg-active {
+  transition: background-color 0.3s ease;
+  background-color: #f8fafc !important; /* Matches Vanta's light background color */
+}
+
+@media (prefers-color-scheme: dark) {
+  body.unified-bg-active {
+    background-color: #15161c !important; /* Matches Vanta's dark background color exactly */
+  }
+}
+
+body.unified-bg-active .bg-grid {
+  display: none !important;
+}
+
+
+
+/* Make page sections transparent to show the fixed Vanta background */
+body.unified-bg-active .unified-bg-section {
+  background: transparent !important;
+}
+
+/* Hide the custom opaque radial backgrounds of these sections to let the net shine through */
+body.unified-bg-active .section-bg-overlay {
+  opacity: 0 !important;
+  display: none !important;
+  pointer-events: none !important;
+}
+
+/* Reduce the opacity of background glows so they don't compete with the net lines */
+body.unified-bg-active .bg-glow {
+  opacity: 0.25 !important;
+  transition: opacity 0.5s ease;
+}
+
+/* Vanta canvas transition styles */
+#vanta-bg-canvas {
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+#vanta-bg-canvas.vanta-ready {
+  opacity: 1;
+}
+
 

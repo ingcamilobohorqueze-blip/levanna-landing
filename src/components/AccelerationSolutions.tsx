@@ -103,20 +103,6 @@ export default function AccelerationSolutions() {
   const [customInput, setCustomInput] = useState<string>('');
   const chatEndRef = useRef<HTMLDivElement>(null);
 
-  // Stable random particles properties generated once
-  const [particles] = useState(() => 
-    [...Array(18)].map((_, i) => ({
-      id: i,
-      width: Math.random() * 4 + 2 + 'px',
-      height: Math.random() * 4 + 2 + 'px',
-      left: Math.random() * 100 + '%',
-      top: Math.random() * 100 + '%',
-      y: [0, Math.random() * -80 - 40, 0],
-      x: [0, Math.random() * 60 - 30, 0],
-      duration: Math.random() * 6 + 5
-    }))
-  );
-
   useEffect(() => {
     // Sync theme with prefers-color-scheme
     const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
@@ -254,6 +240,7 @@ export default function AccelerationSolutions() {
   return (
     <section 
       id="aceleracion-digital" 
+      className="unified-bg-section"
       style={{ 
         position: 'relative', 
         width: '100%', 
@@ -264,37 +251,9 @@ export default function AccelerationSolutions() {
       }}
     >
       {/* Background Radial Glow */}
-      <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: radialGradient, pointerEvents: 'none', zIndex: 0 }} />
+      <div className="section-bg-overlay" style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, background: radialGradient, pointerEvents: 'none', zIndex: 0 }} />
 
-      {/* Floating Particles ('Luciérnagas') for continuity */}
-      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', pointerEvents: 'none', zIndex: 1 }}>
-        {particles.map((p) => (
-          <motion.div
-            key={`particle-acel-${p.id}`}
-            style={{
-              position: 'absolute',
-              width: p.width,
-              height: p.height,
-              background: isDark ? 'rgba(255, 255, 255, 0.9)' : accentColor,
-              borderRadius: '50%',
-              left: p.left,
-              top: p.top,
-              boxShadow: isDark ? '0 0 15px rgba(255, 255, 255, 0.8), 0 0 5px #00E5FF' : 'none',
-              pointerEvents: 'none',
-            }}
-            animate={{
-              y: p.y,
-              x: p.x,
-              opacity: isDark ? [0.2, 1, 0.2] : [0.1, 0.6, 0.1],
-            }}
-            transition={{
-              duration: p.duration,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
+
 
       <div className="container" style={{ position: 'relative', zIndex: 10 }}>
         {/* Header */}

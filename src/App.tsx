@@ -7,17 +7,24 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermsAndConditions from './pages/TermsAndConditions';
+import VantaBackground from './components/VantaBackground';
 import WhatsAppButton from './components/WhatsAppButton';
 
 function App() {
   useEffect(() => {
+    // Enable unified dynamic background globally
+    document.body.classList.add('unified-bg-active');
+
     (async function () {
       const cal = await getCalApi();
       cal("ui", {"styles":{"branding":{"brandColor":"#1A2233"}}});
     })();
   }, []);
+  
   return (
     <>
+      <VantaBackground />
+      
       {/* Background Animated Logo */}
       <div className="bg-logo-wrapper">
         <img src="/logo-dark.png" alt="" className="bg-dynamic-logo logo-dark" />
