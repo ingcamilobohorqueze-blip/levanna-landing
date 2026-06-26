@@ -320,14 +320,14 @@ p {
 .bg-dynamic-logo {
   width: 100%;
   height: auto;
-  opacity: 0.10; /* Increased from 0.03 to be more visible */
+  opacity: 0.12; /* Increased by 20% (from 0.10 to 0.12) to be more visible */
   filter: grayscale(100%) brightness(150%);
   animation: dynamicLight 8s infinite alternate ease-in-out;
 }
 
 @media (prefers-color-scheme: dark) {
   .bg-dynamic-logo {
-    opacity: 0.18; /* Increased from 0.05 to stand out */
+    opacity: 0.22; /* Increased by 20% (from 0.18 to 0.22) to stand out */
     filter: drop-shadow(0 0 20px rgba(107, 114, 128, 0.25)) brightness(1.2);
   }
 }

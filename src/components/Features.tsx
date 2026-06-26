@@ -371,6 +371,7 @@ export default function Features() {
             
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2rem' }}>
               <div style={{
+                position: 'relative',
                 width: '240px',
                 height: '240px',
                 borderRadius: '50%',
