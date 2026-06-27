@@ -93,7 +93,7 @@ export default function Features() {
       title: 'Control Presupuestal', 
       code: 'LEV-FIN-CTL-BGT',
       status: 'En Desarrollo',
-      desc: 'Sistematización financiera enfocada en obra. Control cruzado entre presupuesto base vs. ejecutado y auditoría ágil de cortes de subcontratistas. Visualiza el estado real de tus finanzas con métricas actualizadas segundo a segundo.', 
+      desc: 'Inteligencia predictiva enfocada en tu proyecto. Cruza automáticamente tu planeación de MS Project con el gasto real ejecutado, sin doble digitación. Anticipa sobrecostos, audita cortes al instante y visualiza la salud financiera de tu proyecto en tiempo real.', 
       image: '/apps/control-presupuestal.png' 
     }
   ];
