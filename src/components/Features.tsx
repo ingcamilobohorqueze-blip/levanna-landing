@@ -60,7 +60,7 @@ export default function Features() {
       demoUrl: 'https://www.youtube.com/embed/0SQowfSg0Cs'
     },
     { 
-      title: 'Caja Menor WhatsApp + IA', 
+      title: 'Caja Menor + IA', 
       code: 'LEV-OPS-BOT-TG',
       status: 'Operativa',
       desc: 'Auditoría y control de gastos de campo, ahora en su propia App. Evolucionamos nuestra gestión financiera dejando atrás los reportes por WhatsApp. Con nuestra aplicación tienes el control absoluto: verifica registros, bloquea gastos no autorizados y mantén un historial inmutable.', 
