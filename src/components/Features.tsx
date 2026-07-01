@@ -92,9 +92,10 @@ export default function Features() {
     { 
       title: 'Control Presupuestal', 
       code: 'LEV-FIN-CTL-BGT',
-      status: 'En Desarrollo',
+      status: 'Operativa',
       desc: 'Inteligencia predictiva enfocada en tu proyecto. Cruza automáticamente tu planeación de MS Project con el gasto real ejecutado, sin doble digitación. Anticipa sobrecostos, audita cortes al instante y visualiza la salud financiera de tu proyecto en tiempo real.', 
-      image: '/apps/control-presupuestal.png' 
+      image: '/apps/control-presupuestal.png',
+      demoUrl: 'https://www.youtube.com/embed/G60VuqaZ4KI'
     }
   ];
 
