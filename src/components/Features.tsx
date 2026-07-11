@@ -49,7 +49,7 @@ export default function Features() {
       status: 'Operativa',
       desc: 'El centro neurálgico de tu operación. Una plataforma SaaS integral que conecta todos los módulos de Levanna, permitiendo una visión 360° de tus proyectos, gestión de usuarios y analítica en tiempo real.', 
       image: '/levanna-logo-hub.png',
-      demoUrl: 'https://www.youtube.com/embed/R1PCi1Tj_fA'
+      demoUrl: 'https://www.youtube.com/embed/wdUTOI4d2_U'
     },
     { 
       title: 'Control de Acceso Inteligente', 
