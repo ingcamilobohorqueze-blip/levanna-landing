@@ -38,9 +38,30 @@ export default function Footer() {
           <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
             Automatizamos procesos, potenciamos decisiones.
           </p>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', opacity: 0.8 }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', opacity: 0.8, marginBottom: '1.25rem' }}>
             Aceleramos el futuro de la construcción integrando Inteligencia Artificial en tus flujos de trabajo.
           </p>
+
+          {/* ISO 27001 Security Badge */}
+          <div className="iso-badge-container">
+            <img 
+              src="/iso-27001-logo.svg" 
+              alt="ISO 27001 - Marco de Seguridad de la Información" 
+              className="iso-logo-img"
+            />
+            <div className="iso-badge-text">
+              <div className="iso-badge-title">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                  <path d="m9 12 2 2 4-4" />
+                </svg>
+                <span>MARCO ISO 27001</span>
+              </div>
+              <p className="iso-badge-desc">
+                Operamos bajo los lineamientos y buenas prácticas del marco de seguridad ISO 27001.
+              </p>
+            </div>
+          </div>
         </div>
         
         <div>
