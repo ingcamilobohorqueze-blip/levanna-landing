@@ -28,7 +28,7 @@ export default function Footer() {
           </div>
         )}
       </div>
-      <div className="container grid-3" style={{ marginBottom: '4rem', gap: '4rem' }}>
+      <div className="container footer-main-grid">
         <div>
           <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
             <img src="/logo-dark.png" alt="Levanna DC" className="logo-dark" style={{ height: '45px', objectFit: 'contain', marginRight: '0.75rem' }} />
@@ -38,11 +38,13 @@ export default function Footer() {
           <p style={{ fontSize: '1rem', color: 'var(--text-secondary)', marginBottom: '0.5rem' }}>
             Automatizamos procesos, potenciamos decisiones.
           </p>
-          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', opacity: 0.8, marginBottom: '1.25rem' }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--text-secondary)', opacity: 0.8 }}>
             Aceleramos el futuro de la construcción integrando Inteligencia Artificial en tus flujos de trabajo.
           </p>
+        </div>
 
-          {/* ISO 27001 Security Badge */}
+        {/* ISO 27001 Security Badge Column */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <div className="iso-badge-container">
             <img 
               src="/iso-27001-logo.svg" 
@@ -51,7 +53,7 @@ export default function Footer() {
             />
             <div className="iso-badge-text">
               <div className="iso-badge-title">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
                   <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
                   <path d="m9 12 2 2 4-4" />
                 </svg>

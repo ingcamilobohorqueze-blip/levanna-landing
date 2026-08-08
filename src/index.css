@@ -717,18 +717,26 @@ body.unified-bg-active .bg-glow {
   opacity: 1;
 }
 
-/* ISO 27001 Security Badge Styling */
+/* Footer Layout Grid & ISO 27001 Security Badge */
+.footer-main-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr 0.8fr 0.8fr;
+  gap: 2.5rem;
+  align-items: center;
+  margin-bottom: 4rem;
+}
+
 .iso-badge-container {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  margin-top: 1.25rem;
-  padding: 0.85rem 1.1rem;
-  border-radius: 12px;
+  gap: 1.1rem;
+  padding: 0.95rem 1.25rem;
+  border-radius: 14px;
   background: var(--panel-bg);
   border: 1px solid var(--panel-border);
   box-shadow: var(--shadow-soft);
-  max-width: 400px;
+  width: 100%;
+  max-width: 440px;
   backdrop-filter: blur(12px);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -740,8 +748,9 @@ body.unified-bg-active .bg-glow {
 }
 
 .iso-logo-img {
-  height: 44px;
+  height: 48px;
   width: auto;
+  min-width: 135px;
   flex-shrink: 0;
   object-fit: contain;
 }
@@ -755,7 +764,7 @@ body.unified-bg-active .bg-glow {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.05em;
   color: #0052b4;
@@ -772,22 +781,34 @@ body.unified-bg-active .bg-glow {
   font-size: 0.78rem;
   color: var(--text-secondary);
   line-height: 1.35;
-  margin-top: 0.2rem;
+  margin-top: 0.25rem;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 1100px) {
+  .footer-main-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-main-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
   .iso-badge-container {
-    max-width: 100%;
-    padding: 0.75rem 0.85rem;
-    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    gap: 0.85rem;
   }
   .iso-logo-img {
-    height: 38px;
+    height: 40px;
+    min-width: 110px;
   }
   .iso-badge-desc {
     font-size: 0.75rem;
   }
 }
+
 
 
 

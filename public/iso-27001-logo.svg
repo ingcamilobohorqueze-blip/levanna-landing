@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 190" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 180" fill="none">
   <style>
     .iso-primary { fill: #0052b4; }
     .iso-box-text { fill: #ffffff; }
@@ -6,18 +6,18 @@
       .iso-primary { fill: #60a5fa; }
     }
   </style>
-  <!-- Left Box -->
-  <rect x="10" y="15" width="160" height="160" rx="6" class="iso-primary" />
-  <text x="90" y="122" class="iso-box-text" font-family="'Outfit', system-ui, -apple-system, sans-serif" font-weight="900" font-size="72" text-anchor="middle" letter-spacing="-1">ISO</text>
+  <!-- Left Box (ISO) -->
+  <rect x="10" y="10" width="160" height="160" rx="8" class="iso-primary" />
+  <text x="90" y="115" class="iso-box-text" font-family="'Outfit', system-ui, -apple-system, sans-serif" font-weight="900" font-size="72" text-anchor="middle" letter-spacing="-1">ISO</text>
   
   <!-- Top Bar & INFORMATION SECURITY -->
-  <rect x="190" y="18" width="95" height="10" rx="2" class="iso-primary" />
-  <text x="295" y="27" class="iso-primary" font-family="'Outfit', system-ui, -apple-system, sans-serif" font-weight="800" font-size="14" letter-spacing="0.3">INFORMATION SECURITY</text>
+  <rect x="188" y="18" width="95" height="9" rx="2" class="iso-primary" />
+  <text x="292" y="27" class="iso-primary" font-family="'Outfit', system-ui, -apple-system, sans-serif" font-weight="800" font-size="13" letter-spacing="0.2">INFORMATION SECURITY</text>
 
   <!-- 27001 -->
-  <text x="185" y="142" class="iso-primary" font-family="'Outfit', system-ui, -apple-system, sans-serif" font-weight="900" font-size="124" letter-spacing="-3">27001</text>
+  <text x="182" y="136" class="iso-primary" font-family="'Outfit', system-ui, -apple-system, sans-serif" font-weight="900" font-size="118" letter-spacing="-3">27001</text>
 
   <!-- Bottom Bar & MANAGEMENT SYSTEM -->
-  <rect x="190" y="160" width="105" height="10" rx="2" class="iso-primary" />
-  <text x="305" y="169" class="iso-primary" font-family="'Outfit', system-ui, -apple-system, sans-serif" font-weight="800" font-size="14" letter-spacing="0.3">MANAGEMENT SYSTEM</text>
+  <rect x="188" y="152" width="105" height="9" rx="2" class="iso-primary" />
+  <text x="300" y="161" class="iso-primary" font-family="'Outfit', system-ui, -apple-system, sans-serif" font-weight="800" font-size="13" letter-spacing="0.2">MANAGEMENT SYSTEM</text>
 </svg>
