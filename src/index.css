@@ -809,6 +809,51 @@ body.unified-bg-active .bg-glow {
   }
 }
 
+/* Footer Social Links & Corporate Color Adaptation */
+.footer-social-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 1.25rem;
+  width: 100%;
+}
+
+.footer-social-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.45rem 0.85rem;
+  border-radius: 12px;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  background: transparent;
+  border: 1px solid transparent;
+  text-decoration: none;
+}
+
+.footer-social-link:hover {
+  transform: translateY(-2px);
+  background: var(--panel-bg);
+  border-color: var(--panel-border);
+  box-shadow: var(--shadow-soft);
+}
+
+.footer-social-img {
+  width: auto;
+  object-fit: contain;
+  transition: opacity 0.3s ease;
+}
+
+.footer-social-img.youtube-img {
+  height: 26px;
+}
+
+.footer-social-img.linkedin-img {
+  height: 23px;
+}
+
+
+
+
 
 
 

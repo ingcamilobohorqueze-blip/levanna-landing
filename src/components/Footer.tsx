@@ -43,8 +43,8 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* ISO 27001 Security Badge Column */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {/* ISO 27001 Security Badge Column & Corporate Social Links */}
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
           <div className="iso-badge-container">
             <img 
               src="/iso-27001-logo.svg" 
@@ -63,6 +63,30 @@ export default function Footer() {
                 Operamos bajo los lineamientos y buenas prácticas del marco de seguridad ISO 27001.
               </p>
             </div>
+          </div>
+
+          {/* Social Links under ISO badge */}
+          <div className="footer-social-container">
+            <a 
+              href="https://www.youtube.com/@LevannaDC" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Canal de YouTube de Levanna DC"
+              className="footer-social-link"
+            >
+              <img src="/youtube-logo-light.png" alt="YouTube" className="footer-social-img logo-dark youtube-img" />
+              <img src="/youtube-logo-dark.png" alt="YouTube" className="footer-social-img logo-light youtube-img" />
+            </a>
+            <a 
+              href="https://www.linkedin.com/company/levannadc/" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              aria-label="Página de LinkedIn de Levanna DC"
+              className="footer-social-link"
+            >
+              <img src="/linkedin-logo-light.png" alt="LinkedIn" className="footer-social-img logo-dark linkedin-img" />
+              <img src="/linkedin-logo-dark.png" alt="LinkedIn" className="footer-social-img logo-light linkedin-img" />
+            </a>
           </div>
         </div>
         
